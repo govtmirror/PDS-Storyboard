@@ -1,0 +1,471 @@
+<div class="modal_pou_up">
+    <div class="add_pin_top_ab3 custom-model add_pin_top">
+        <div class="modal-content">
+            <div class="modal-header gap">
+                <button type="button" class="close_yellow" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            
+
+            <!--  Head  -->
+            <div class="add_pin">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="add_pin_web_site">
+
+                            <div id="pop_cont"> 
+                                <img src="/default/images/ajax-loader.gif" id="loading2" style="display:none;"/>
+                                <!-- addpin forms here -->
+                                
+                                <!-- common upload from computer -->
+                                <div id="local">
+                                    {{#if editing}}
+                                    <h1>Edit Pin</h1>
+                                    {{else}}
+                                    <h1>Pin from your computer</h1>
+                                    {{/if}}
+                                    <form id="{{#if editing}}editForm{{else}}localForm{{/if}}" name="localForm" method="post" action="/{{#if editing}}edit/pin/{{pin._id}}{{else}}upload_action{{/if}}" enctype="multipart/form-data">
+                                        {{#if editing}}{{else}}
+                                        <p>&nbsp;</p>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        Pin From : &nbsp;
+                                        <input type="radio" name="sub" value="local" checked="checked" />&nbsp; Computer &nbsp;
+                                        <input type="radio" name="sub" value="web" />&nbsp; Web &nbsp;
+                                        <p>&nbsp;</p>
+                                        {{/if}}
+                                        <!-- messages here -->    
+                                        <div class="errmsg errmsgMain"></div>
+                                        <div class="errmsg">
+                                            {{#if error}}
+                                                {{error}}
+                                            {{/if}}
+                                        </div>
+                                        <p>&nbsp;</p>
+                                        <div class="errmsg errmsgBoard"></div>
+                                        <select name="board_id" id="board_id" required class="inputText" >
+                                            {{#if editing}}{{else}}
+                                            <option value="" selected="selected">Select Board</option>
+                                            {{/if}}
+                                            {{#each boards}}
+                                            <option value="{{this._id}}" {{sel this._id ../pin.board_id}}>{{this.board_name}}</option>
+                                            {{/each}}
+                                        </select>
+                                        <p>&nbsp;</p>
+                                        <div class="errmsg errmsgImage"></div>
+                                        {{#if editing}}
+                                        {{#notifCond pin.pin_type 'pdf'}}
+                                        <br /><br />
+                                        <img src="/pins/images/thumb/{{pin_thumb}}" class="inputText inputImage">
+                                        {{/notifCond}}
+                                        {{/if}}
+                                        {{#notifCond pin.pin_type 'pdf'}}
+                                        <input type="file" name="upload" id="upload" {{#if editing}}{{else}}required{{/if}} class="inputText" accept="image/*,application/pdf"/>
+                                        {{/notifCond}}
+                                        <p>&nbsp;</p>
+                                        <div class="errmsg errmsgDescription"></div>
+                                        <textarea name="description" id="description" required class="inputText" placeholder="Description">{{pin.description}}</textarea>
+                                        <div class="msg"></div>
+                                        {{#if pin.pin_url}}
+                                            <input placeholder="Pin url" type="url" name="pin_url"  class="inputText" value="{{pin.pin_url}}" required/>
+                                        {{/if}}
+                                        {{#if pin.source_url}}
+                                            <input placeholder="Source url" type="url" name="source_url"  class="inputText" value="{{pin.source_url}}" required/>
+                                        {{/if}}
+                                        <p>&nbsp;</p>
+                                        {{#if pin.metadata}}
+                                            <p>Metadata</p>
+                                            <table class="table table-striped dataTable table-bordered" id="pinMetaData">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Key</th><th>Value</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                {{#each pin.metadata}}
+                                                    <tr>
+                                                        <td>{{@key}}</td>
+                                                        <td><input type="{{input_type @key this}}" name="meta.{{@key}}" value="{{input_val this}}" {{checked this}} required class="inputText"></td>
+                                                    </tr>
+                                                {{/each}}
+                                                </tbody>
+                                            </table>
+                                        {{/if}}
+                                    </form>
+                                </div> 
+                                
+                                <!-- web form -->
+                                <div id="web" style="display:none;">
+                                    <h1>Pin from web</h1>
+                                    <form id="webForm" name="webForm" method="post" action="/pinpage" onsubmit="$('#get_img').addClass('disable-like');  $('.loader').show();">
+                                        <input type="hidden" value="webpage" id="pin_cat" name="pin_cat"/>
+                                        <p>&nbsp;</p>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        Pin From : &nbsp;
+                                        <input type="radio" name="sub" value="local"/>&nbsp; Local &nbsp;
+                                        <input type="radio" name="sub" value="web" checked/>&nbsp; Web &nbsp;
+                                        <p>&nbsp;</p> 
+                                        <!-- messages here -->    
+                                        <div class="msg"></div>
+                                        <div class="errmsg"></div>
+                                        <p>&nbsp;</p> 
+                                        <select name="board_id" id="board_id" class="inputText required ">
+                                            <option value="" selected="selected">Select Board</option>
+                                            {{#each boards}}
+                                            <option value="{{this._id}}">{{this.board_name}}</option>
+                                            {{/each}}
+                                        </select>
+                                        <p>&nbsp;</p>
+                                        <input type="text" class="inputText required url" name="url" id="url" value="" placeholder="Web Link" />
+                                        <div id="show_song" style="width:80%; margin:15px auto 0 15px; display: none; "></div>
+                                        <iframe id="preview_id" src="" width="80%" height="250" frameborder="0" style="display: none; margin-left: 20px;"></iframe>
+                                        <img src="/default/images/ajax-loader.gif" id="loading" style="display:none; margin-left: 20px;"/>
+                                        <img id="webpageshot" src="" style="display:none; margin-left: 20px; width: 80%; height: 220px;"/>
+                                        <div id="selImages"></div>
+                                        <p>&nbsp;</p>
+                                        <textarea name="description" id="description" placeholder="Description" class="inputText required youtube_description" ></textarea>
+                                        <p>&nbsp;</p>
+                                    </form>
+                                </div>
+
+                                <!-- end addpin forms -->
+
+                            </div>
+                            <p class="editErrMsg errmsg"></p>
+                            <div class="btn-group nav_pin">
+                                <a id="{{#if editing}}postEdits{{else}}get_img{{/if}}" class="btn nav_pin nav_pin_drop" >{{#if editing}}Update{{else}}Upload{{/if}}<a/>
+                                    <button type="button" class="btn dropdown-toggle nav_pin_icon" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu nav_pin_drop_d" role="menu" id="dropdown_ul" >
+                                        <li><a href="javascript:;" id="image">Image</a></li>
+                                        <li><a href="javascript:;" id="webpage">Webpage</a></li>
+                                        <li><a href="javascript:;" id="pdf">PDF</a></li>
+                                    </ul>    
+                            </div>
+                            <!--</form>-->
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ajax form to validate files
+   $('#localForm').ajaxForm({
+       beforeSend: function(){
+         $('.loader').show();
+       },
+        success:function(data) {
+            $(".errmsgBoard").html('');
+            $(".errmsgImage").html('');
+            $(".errmsgDescription").html('');
+            if(data.error==1){
+                $(".errmsgMain").html(data.msg);
+                $(".errmsgBoard").html(data.msgBoard);
+                $(".errmsgImage").html(data.msgImage);
+                $(".errmsgDescription").html(data.msgDescription);
+            } else {
+                $(".errmsgMain").css({'color':'green'}).html('Pin inserted successfully');
+                setTimeout(function(){
+                    $('#myModal2').modal('hide')
+                },1000);
+            }
+        },
+        error: function(e){
+            $(".errmsg").html(e);
+        },
+        complete: function(jqxhr, status, error) {
+            $('.loader').hide();  
+            // $('#localForm')[0].reset();
+            $('#get_img').removeClass('disable-like');  
+        }
+    }); 
+    
+//    $('#webForm').ajaxForm({
+//        beforeSend: function(){
+//            
+//         $('.loader').show();  
+//            
+//       },
+//        success:function(data) { 
+//            if(data.error==1){
+//                $(".errmsg").html(data.msg);
+//            } else {
+//                $(".errmsg").css({'color':'green'}).html('Pin inserted successfully');
+//               setTimeout(function(){
+//                    $('#myModal2').modal('hide')
+//                },1000);
+//            }
+//        },
+//        error: function(e){
+//            $(".errmsg").html(e);
+//        },
+//        complete: function(jqxhr, status, error) {
+//            $('.loader').hide(); 
+//            $('#webForm')[0].reset();
+//            $('#get_img').removeClass('disable-like');  
+//        }
+//    }); 
+            
+    var req ;
+    /* to clear pop up contents on each close */
+    $("#myModal2").on('hidden.bs.modal', function () {
+        $(this).data('bs.modal', null);
+    });
+    
+    $(function(){
+        //disable dropdown
+        $(".btn.dropdown-toggle.nav_pin_icon").attr('disabled','disabled');
+        
+        //initial form show
+        $("#local").show();
+        $(".btn-group.nav_pin").addClass('add_pin_btn');
+        $('#get_img').unbind('click').bind('click',function(){
+            $('#get_img').addClass('disable-like');
+            $("#localForm").validate();
+            $('#localForm').submit(); 
+        });
+        
+        $("input[type=radio][name=sub]").on('click',function(){
+            var type = $("input[type=radio][name=sub]:checked").val();
+            $("input[type=radio][name=sub]").removeAttr('checked');
+            $('input,select,textarea').removeClass('error').removeAttr('style');
+            $('.errmsg,.msg').text('');
+            $('#url').val('');
+            $("#preview_id").attr('src','').hide();
+            $("#show_song,#selImages").html('').hide();
+            $("#webpageshot").attr("src",'').hide();
+            if(type=='web'){
+                $("#local").hide();
+                $(".btn-group.nav_pin").removeClass('add_pin_btn');
+                $("#board_id option:selected").val('');
+                $(".btn.dropdown-toggle.nav_pin_icon").removeAttr('disabled');
+                $("#web input[type=radio][name=sub][value=web]").attr('checked','checked');
+                $('#get_img').html('Pin');
+                $("#web").show();
+                $('#get_img').unbind('click').bind('click',function(){
+                    $('#get_img').addClass('disable-like');
+                        var url = $("#url").val();
+                        //if(is_valid_url(url)) {
+                            $("#webForm").validate();
+                            $('#webForm').submit(); 
+                            return false;
+                        //}
+                });
+                $(document).keypress(function(e) {
+                    if(e.keyCode == 13) {
+                        var url = $("#url").val();
+                        //if(is_valid_url(url)) {
+                            $("#webForm").validate();
+                            $('#webForm').submit(); 
+                        //} else {
+                        //    e.preventDefault(); // set default event to false
+                        //}
+                    }
+                });
+            } else if(type=='local'){
+                $("#web").hide();
+                $(".btn-group.nav_pin").addClass('add_pin_btn');
+                $(".btn.dropdown-toggle.nav_pin_icon").attr('disabled','disabled');
+                $("#local input[type=radio][name=sub][value=local]").attr('checked','checked');
+                $('#get_img').html('Upload');
+                $("#local").show();
+                $('#get_img').unbind('click').bind('click',function(){
+                    $('#get_img').addClass('disable-like');
+                    $("#localForm").validate();
+                    $('#localForm').submit(); 
+                });
+            }
+        });
+
+        $("#url").change(function(){
+        
+            $("#show_song,#preview_id,#selImages").hide();
+            $("#preview_id,#webpageshot").attr("src","").hide();
+            $("#loading").css({'display':'none'});
+            var url = $("#url").val();
+            if(is_valid_url(url)) {
+               $('#url').removeClass('error');
+               $(".errmsg").text('');
+               var website = url.split('/')[2];
+               if(website.substr(0,3)=='www'){
+                    website = website.substr(4);
+               }
+               
+                webpageFunctions(url);
+           }
+        });
+        
+        $("#dropdown_ul li a").click(function(){
+            if(req){
+                req.abort();
+            }
+            //clearing form fields,checkboxes and error messages
+            $('input,select,textarea').removeClass('error').removeAttr('style');
+            $('.errmsg,.msg').text('');
+            $("#show_song,#loading,#selImages").hide();
+            $("#preview_id,#webpageshot").attr("src","").hide();
+            var type = $(this).attr("id") ;
+            var url = $("#url").val();
+            if(is_valid_url(url)) {
+                switch(type){
+                    case 'image': imageFunctions(url);break;
+                    case 'webpage': webpageFunctions(url);break;
+                    case 'pdf': pinWebPDF(url);break;
+                    default : webpageFunctions(url);
+                }
+            } else {
+                //$('#url').css({'border':'1px solid red'}); 
+                $('#url').addClass('error');
+            }
+        });
+    });
+    function webpageFunctions(url){
+        $('#get_img').html('Pin Webpage');
+        $('#loading').css({'display':'block'});
+        req = $.post('/screenshot',{'pageurl' : url},function(data,status){
+            if(data.image){
+                $("#webpageshot").attr("src", "/pins/images/temp/" + data.image + '?t=' + new Date()).css({'display':'block','max-width':'680px'});
+                $('#loading').css({'display':'none'});
+                $('form#webForm').attr('action','/pinpage');
+                $('#pin_cat').val('webpage');
+                $('#get_img').unbind('click').bind('click',function(){
+                    $('#get_img').addClass('disable-like');
+                    $("#webForm").validate({rules: {url: "url"}}); 
+                    $('#webForm').submit(); 
+                });
+                $(document).keypress(function(e) {
+                   if(e.keyCode == 13) {
+                       $('form#webForm').attr('action','/pinpage');
+                       //alert($('form#webForm').attr('action'));
+                       var url = $("#url").val();
+                       //if(is_valid_url(url)) {
+                           $("#webForm").validate();
+                           $('#webForm').submit(); 
+                       //} else {
+                       //    e.preventDefault(); // set default event to false
+                       //}
+                   }
+                });
+            } else {
+                 $(".errmsg").text(data.error);
+                 $('#loading').hide();
+                 return false;
+            }
+        });
+    }
+    function pinWebPDF(){
+        $('#get_img').html('Pin PDF');
+        $('#webForm').submit();
+    }
+    function imageFunctions(url){
+        $('#get_img').html('Pin Image');
+        actionFunction(url);
+    }
+    function actionFunction(url){
+        //if(is_valid_url(url)) {
+        
+            $("#show_song").hide();
+            $("#preview_id,#webpageshot").attr("src","").hide();
+            $("#loading").css({'display':'block'});
+            req = $.post('/post_url',{'url' : url },
+            function(data){
+                $("#loading").css({'display':'none'});
+                $("#selImages").html(data).show();
+                $('form#webForm').attr('action','/select_action');
+                $('#get_img').unbind('click').bind('click',function(){
+                    $('#get_img').addClass('disable-like');
+                   //alert($("input.img_chkbox:checkbox:checked").length);
+                    //if atleast one checkbox exist
+                    if($("input.img_chkbox:checkbox:checked").length!=0){
+                        //alert($("input.img_chkbox:checkbox:checked").length);
+                        if ($("input.img_chkbox:checkbox:checked").length > 0){
+                            // if any image is checked
+                            if ($("input.img_chkbox:checkbox:checked").length > 4){
+                                //alert('Maximum 4 images.');
+                                $(".errmsg").text("Maximum 4 images.");
+                                return false;
+                            }
+                            else{
+                                $(document).keypress(function(e) {
+                                    if(e.keyCode == 13) {
+                                        var url = $("#url").val();
+                                       // if(is_valid_url(url)) {
+                                            $("#webForm").validate();
+                                            $('#webForm').submit(); 
+                                        //} else {
+                                        //    e.preventDefault(); // set default event to false
+                                        //}
+                                    }
+                                 });
+                                $("#webForm").validate(); 
+                                $('#webForm').submit(); 
+                            }
+                        }
+                    } else {
+                        // nothing checked
+                        $(".errmsg").text("You must select atleast one image.");
+                        return false;
+                    }
+                });
+                
+            });
+        //}
+    }
+    //this function is only for id="url"
+    function is_valid_url(url)
+    {
+        if(url!=''){
+            if(url.length<12) {
+                $('#url').addClass('error');
+                $(".errmsg").text("Enter a valid URL.(eg: http://www.example.com)");
+                return false;
+            } else if(url.length>=12){
+                if(url.substr(0,5)=='http:' || url.substr(0,6)=='https:'){ 
+                    return true;
+                } else {
+                    $('#url').addClass('error');
+                    $(".errmsg").text("Enter a valid URL.(eg: http://www.example.com)");
+                    return false;
+                }
+            }
+        } else {
+            $('#url').addClass('error');
+            return false;
+        }
+    }
+
+{{#if editing}}
+    $(document).ready(function(){
+        $('#postEdits').click(function(e){
+            $('#editForm').validate();
+            $('#editForm').submit();
+        });
+        $('#editForm').ajaxForm({
+            beforeSend: function(formData, jqForm, options){
+                $('.loader').show();
+            },
+            success:function(data){
+                $('.loader').hide();
+                if(data.error == 1 || data.success == false){
+                    console.log(data);
+                    $(".editErrMsg").html(data.msg || data.message);
+                } else {
+                    $(".errmsg").css({'color':'green'}).html(data.msg);
+                    setTimeout(function(){
+                        location.reload(true);
+                    },500);
+                }
+            },
+            error: function(e){
+                var data = JSON.parse(e.responseText);
+                $(".editErrMsg").html(data.msg || data.message);
+                $('.loader').hide();
+            }
+        });
+    });
+{{/if}}
+</script>

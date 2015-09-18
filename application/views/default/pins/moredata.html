@@ -1,0 +1,18 @@
+<!-- Data for the timeline list of pins -->
+  {{#each data}}
+    {{#ifCond pin_type 'web_page'}}
+    {{> pinvieweb this }}
+    {{/ifCond}}
+
+    {{#ifCond pin_type 'image'}}
+    {{> pinviewimage this}}
+    {{/ifCond}}
+
+    {{#ifCond pin_type 'url_image'}}
+    {{> pinviewimage this}}
+    {{/ifCond}}
+
+    {{#ifCond pin_type 'pdf'}}
+    {{> pinviewpdf this}}
+    {{/ifCond}}
+  {{/each}}

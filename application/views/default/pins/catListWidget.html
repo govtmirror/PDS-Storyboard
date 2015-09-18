@@ -1,0 +1,78 @@
+<div class="wrap" id="timeline_{{_id}}">
+  <span class="icon icon_plus"><i></i></span>
+  <div class="timeline_content">
+    <div class="timeline_details">
+      <div class="person_detail">
+        <a href="{{siteURL}}/user/{{creator}}" class="subtle">
+          {{#if creator_image}}
+          <img src="{{siteURL}}/user_images/thumb/{{creator_image}}">
+          {{else}}
+          <image src="/default/images/profile-pic.png">
+            {{/if}}
+        </a>
+        <div class="contents">
+          <p><a href="{{siteURL}}/user/{{creator}}">{{creator_name}}</a></p>
+          <span>{{timeAgo timestamp}}</span>
+        </div>
+      </div>
+      <!-- end .person_detail -->
+
+      <div class="contentAction category carousel slide custom">
+        <div class="description">
+          <div class="description-content" style="margin-top: -12px;">
+            <a href="/category/{{_id}}">
+              <p>{{category_name}}</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <div {{#ifCond @index 0}} class="pictureFrame active item2"{{else}} class="pictureFrame item2" {{/ifCond}} >
+            <a href="#">
+              <img class="pictureFrameImg" src="/categories/{{image}}">
+            </a>
+          </div>
+          <div style="display: none;" data-toggle="modal" data-target="#myModal"></div>
+          <a href="/category/{{_id}}" class="time_1 {{#unless domain}} time_1_change_width {{/unless}} icon_search" > <i></i> </a>
+        </div>
+
+        <ul class="statusBar">
+          <li class="dateStatus">
+            <span class="icon_gray_calendar"></span>
+            <span class="data"> {{pinDate timestamp}} </span>
+          </li>
+          <li class="boardStatus">
+            <span class="icon_gray_photo"></span>
+            <span class="data"> {{categoryboardscount}} </span>
+          </li>
+          <li class="userStatus">
+            <span class="icon_gray_user_group"></span>
+            <span class="data"> {{categoryfollowcount}} </span>
+          </li>
+          <li class="commentStatus">
+            <div class="commentButton">
+              <span class="glyphicons glyphicons-comments"></span>
+              <!-- <span class="data"> 2 </span> -->
+            </div>
+          </li>
+          <li class="linkStatus glyphContainer">
+            {{#if source_url}}
+            <a href="{{source_url}}" target="_blank">
+              <span class="glyphicon glyphicon-link linkStatusLink"></span>
+            </a>
+            {{/if}}
+          </li>
+        </ul>
+        <!--end statusBar -->
+
+        <div class="disqusWidgetContainer">
+          <input type="hidden" name="type" value="category" />
+          <input type="hidden" name="id" value="{{_id}}" />
+          <input type="hidden" name="description" value="{{description}}" />
+        </div><!--end disqusWidgetContainer -->
+
+      </div><!-- contentAction -->
+    </div><!-- end .timeline_details -->
+  </div><!-- end .timeline_content -->
+</div><!-- end .wrap -->

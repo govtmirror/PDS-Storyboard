@@ -1,0 +1,158 @@
+<div class="wrap" {{#ifCond icon_type 'Unliked'}}style="display:none"{{/ifCond}}>
+   <span class="icon {{icon_type}}"><i><a href="{{user_link}}"></a></i></span>
+    <div class="timeline_content">
+       <div class="timeline_details">
+           <div class="person_detail">
+                <div class="timeline-item-left">
+                    <a href="{{user_link}}"><img src="{{user_image}}" alt="user image" /></a>
+                </div>
+                <div class="timeline-item-right">
+                    <div class="user-name"><a href="{{user_link}}">{{user_name}}</a></div>
+                    <div class="timeline-item-time">{{time}}</div>
+                </div>
+           </div>
+            <div class="clear"></div>
+            {{#if items}}
+                <div class="contentAction">
+                    <div>
+                        <span class="text">{{text}}</span>
+                        <span class="items">
+                            {{#if new_value}}
+                                <span>to</span>
+                                <img src="{{new_value}}" height="30" />
+                            {{else}}
+                                {{#each items}}
+                                    {{#ifCondAll @index "<=" 2}}
+                                       {{#notifCond item_type 'pin'}}
+                                        {{#isMiddleElement @index ../../../items}}<span>,</span>{{/isMiddleElement}}
+                                        {{#isLastElement @index ../../../items}}
+                                            <span>and</span>
+                                        {{/isLastElement}}
+                                        <a href="{{link}}">{{name}}</a>
+                                        {{/notifCond}}
+                                        {{#oneElement ../../items}}
+                                           {{#if ../../../showStatusBar}}
+                                                <a href="{{link}}">
+                                                    <img src="{{image_large}}" style="width:100%;float:left"/>
+                                                </a>
+                                            {{else}}
+                                                <a href="{{link}}">
+                                                    <img src="{{image}}" height="30" />
+                                                </a>
+                                            {{/if}}
+                                        {{/oneElement}}
+                                        {{#if updates}}
+                                            <span class="text">
+                                                {{#each updates}}
+                                                    {{#isLastElement @index ../../updates}}
+                                                        <span>and</span>
+                                                    {{/isLastElement}}
+                                                {{#isMiddleElement @index ../../updates}}<span>,</span>{{/isMiddleElement}}
+                                                    {{#ifOr this.field 'name,category,board'}}
+                                                        from "{{this.from}}" to "{{this.to}}"
+                                                    {{/ifOr}}
+                                                {{/each}}
+                                            </span>
+                                        {{/if}}
+                                    {{/ifCondAll}}
+                                    {{#ifCondAll @index '==' 3}}
+                                       {{#notifCond item_type 'pin'}}
+                                        {{#isMiddleElement @index ../../../items}}<span>,</span>{{/isMiddleElement}}
+                                        {{#isLastElement @index ../../../items}}
+                                            <span>and</span>
+                                        {{/isLastElement}}
+                                        <a href="{{link}}">{{name}}</a>
+                                        {{#isMiddleElement @index ../../../items}}
+                                            <span>and {{math ../../../../../items.length '-1' @index}} more</span>
+                                        {{/isMiddleElement}}
+                                        {{/notifCond}}
+                                    {{/ifCondAll}}
+                                {{/each}}
+                            {{/if}}
+                        </span>
+                        {{#if related_item}}
+                            <span class="related-item">
+                                <span class="link-word">{{related_item.link_word}}</span>
+                                <span class="related-item-type">{{related_item.type}}</span>
+                                <a class="related-item-name" href="{{related_item.link}}">{{related_item.name}}</a>
+<!--
+                                <a class="related-item-link" href="{{related_item.link}}">
+                                    <img src="{{related_item.image}}" height="30" />
+                                </a>
+-->
+                            </span>
+                        {{/if}}
+                    </div>
+                    {{#arrlenGtOne items}}
+                        <div>
+                            {{#each items}}
+                                {{#ifCondAll @index "<=" 2}}
+                                <div class="pictureWrapper">
+                                    <a href="{{link}}"><img src="{{image}}" class="storyImage"/></a>
+                                </div>
+                                {{/ifCondAll}}
+                                {{#ifCondAll @index '==' 3}}
+                                <div class="pictureWrapper {{#ifCond item_type 'user'}}userItem{{/ifCond}}">
+                                    <a href="{{link}}">
+                                        <img src="{{image}}" alt="timeline" class="storyImage">
+                                    </a>
+                                    {{#isMiddleElement @index ../../items}}
+                                        <div class="overlay"></div>
+                                        <a href="{{link}}" class="overflowLabel">+{{math ../../../items.length '-1' @index}}</a>
+                                    {{/isMiddleElement}}
+                                </div>
+                                {{/ifCondAll}}
+                            {{/each}}
+                        </div>
+                    {{/arrlenGtOne}}
+                </div>
+                {{#if showStatusBar}}
+                   <div class="clear"></div>
+                    <ul class="statusBar">
+                        <li class="dateStatus">
+                            <span class="icon_gray_calendar"></span>
+                            <span class="data">{{toDateStr timestamp}}</span>
+                        </li>
+                        {{#ifCond items.[0].item_type 'pin'}}
+                            <li class="heartStatus glyphContainer showStatus">
+                                {{#ifCond items.[0].pinlike '1'}}
+                                 <a href="javascript:void(0)" class="glyphicon glyphicon-heart heartStatusLink active" id="like_{{items.[0].item_id}}" onclick="pinUnlike('{{items.[0].item_id}}', this)"></a>
+                                {{/ifCond}}
+                                {{#ifCond items.[0].pinlike '0'}}
+                                 <a href="javascript:void(0)" class="glyphicon glyphicon-heart heartStatusLink" id="like_{{items.[0].item_id}}" onclick="pinlike('{{items.[0].item_id}}', this)"></a>
+                                {{/ifCond}}
+                               <span class="text"><a class="pincount" id="pincount_{{items.[0].item_id}}" style="pointer-events:none;" href="#">{{items.[0].pinLikeCount}}</a></span>
+                            </li>
+                        {{/ifCond}}
+                        {{#ifCond items.[0].item_type 'board'}}
+                            <li class="pinStatus glyphContainer showStatus">
+                                <span class="glyphicon glyphicon-tags icon_board"></span>
+                                <span class="data">{{items.[0].cntx.pins.length}}</span>
+                            </li>
+                            <li class="userStatus showStatus">
+                                <span class="icon_gray_user_group"></span>
+                                <span class="data">{{items.[0].cntx.followers}}</span>
+                            </li>
+                        {{/ifCond}}
+                        {{#ifCond items.[0].item_type 'category'}}
+                            <li class="boardStatus showStatus">
+                                <span class="icon_gray_photo"></span>
+                                <span class="data">{{items.[0].cntx.boards.length}}</span>
+                            </li>
+                            <li class="userStatus showStatus">
+                                <span class="icon_gray_user_group"></span>
+                                <span class="data">{{items.[0].cntx.followers.length}}</span>
+                            </li>
+                        {{/ifCond}}
+                        <li class="commentStatus" onclick="showDisqusWidget.bind(this)()" data-id="{{items.[0].item_id}}" data-title="{{items.[0].name}}" data-url="{{items.[0].link}}">
+                            <div class="commentButton">
+                                <span class="glyphicons glyphicons-comments"></span>
+                                <span class="data"></span>
+                            </div>
+                        </li>
+                    </ul>
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+</div>

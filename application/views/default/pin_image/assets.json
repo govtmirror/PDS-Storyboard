@@ -1,0 +1,17 @@
+{
+  "css": [
+      "profile_setting",
+      "add_pin",
+      "edit_user",
+      "autocomplete/select2",
+      "bootstrap-table/bootstrap-table"
+],
+  "js": [
+      "jquery-validation",
+      "showplayer",
+      "jqueryform",
+      "autocomplete/select2.min",
+      "bootstrap-table/bootstrap-table.min",
+      "bootstrap-table/bootstrap-table-en-US.min"
+  ]
+}

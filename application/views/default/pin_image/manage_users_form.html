@@ -1,0 +1,134 @@
+<div class="modal_pou_up">
+    <div class="add_pin_top_ab3 custom-model add_pin_top">
+        <div class="modal-content">
+            <div class="modal-header gap">
+                <button type="button" class="close_yellow" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <!--  Head  -->
+            <div class="add_pin">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="add_pin_web_site">
+                            <div id="pop_cont">
+                                <h1>Manage Users for {{type}} {{name}}</h1>
+                                <p>&nbsp;</p>
+                                <span style="color:red;" class="brderrmsg">{{msg}}</span>
+                                <form name="user_roles" id="user_roles" method="post" enctype="multipart/form-data" action="/add_user_role" onsubmit="$('#add_user').addClass('disable-like');">
+                                    <input type="hidden" name="resid" value="{{resid}}" />
+                                    <input type="hidden" name="type" value="{{type}}" />
+    							    <br /><br />
+    							    <select id="usersDropdown" name="userId">
+                                        <option class="firstOp"></option>
+
+                                    </select>
+                                    <input type="submit" name="add_user" id="add_user" value="Add" class="submit">
+                                </form>
+							    <br /><br />
+                                <div class="box-content box-nomargin">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="basic">
+                                            <table id="usersTable" class="table table-hover" data-search="true" data-pagination="true" data-page-size="5" data-page-list="[5, 10, 25, All]">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20%" data-field="name">Name</th>
+                                                        <th style="width: 20%" data-field="username">Username</th>
+                                                        <th style="width: 23%" data-field="email">Email</th>
+                                                        <th style="width: 23%" data-field="role">Role</th>
+                                                        <th style="width: 12%" data-field="button">Manage</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    $.ajax({
+        url: "/get_users/{{type}}/{{resid}}",
+        dataType: 'json',
+        success: function(response) {
+            $('#usersDropdown').select2({
+                placeholder: "Select a user",
+                data: response.dropdownUsers
+            });
+            $("#usersTable").bootstrapTable({
+                data: response.tableUsers,
+                onPageChange: function(number, size){
+                    bindDeleteLinkClickListener();
+                }
+            });
+        },
+        async: false
+    });
+    bindDeleteLinkClickListener();
+    $('#user_roles').ajaxForm({
+        beforeSend: function() {
+            $('.loader').show();
+        },
+        success: function(data) {
+            if (data.error == 1) {
+                $(".brderrmsg").html(data.msg);
+            } else {
+                refreshData();
+            }
+        },
+        error: function(e) {
+            $(".brderrmsg").html(e);
+        },
+        complete: function(jqxhr, status, error) {
+            $('.loader').hide();
+            $('#add_user').removeClass('disable-like');
+            var users = Number($(".boardfollowecount").text());
+            $(".boardfollowecount").text(users + 1);
+        }
+    });
+    function refreshData(){
+        $.ajax({
+            url: "/get_users/{{type}}/{{resid}}",
+            dataType: 'json',
+            success: function(response) {
+                $('#usersDropdown option').not(".firstOp").remove();
+                $('#usersDropdown').select2({
+                    placeholder: "Select a user",
+                    data: response.dropdownUsers
+                });
+                $("#usersTable").bootstrapTable('load', {data: response.tableUsers});
+                $("#usersDropdown").select2('val', '');
+                bindDeleteLinkClickListener();
+            },
+            async: false
+        });
+    }
+
+    function bindDeleteLinkClickListener(){
+        $('.deleteLink').click(function(){
+            $.ajax({
+                url: "/delete_user_role/" + $(this).data("id"),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.error == 1) {
+                        $(".brderrmsg").html(response.msg);
+                    } else {
+                        refreshData();
+                        var users = Number($(".boardfollowecount").text());
+                        $(".boardfollowecount").text(users - 1);
+                    }
+                },
+                error: function(e) {
+                    $(".brderrmsg").html(e);
+                },
+                async: false
+            });
+        });
+    }
+});
+</script>

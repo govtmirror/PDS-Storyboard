@@ -1,0 +1,120 @@
+<!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]--> 
+
+<!-- HEADER BEGIN-->
+<header class="navbar navbar-default navbar-fixed-top nav_mob header{{#if loggeduser_id}} header-logged{{/if}}">
+  <div class="row">
+    <div class="left_box">
+      <a href="javascript:;" class="menu_btn"></a>
+      <a href="/timeline" class="logo"><img src="/site-logo.png" ></a>
+    </div>
+    <!-- end .left_box -->
+    <div class="main_box">
+      <div class="table_main">
+        <div class="search_bar">
+        {{#if searchPage}}
+          <div class="boxs">
+            <div class="search">
+              <div class="tag_boxs">
+                <!-- end .tags -->
+              </div>
+              <div class="search-input-box"></div>
+            </div>
+            <!-- end .search -->
+          </div>
+        {{/if}}
+        </div>
+        {{#if loggeduser_id}}
+            <div class="logged_bar">
+              <div class="cubet_pin_main">
+                <ul class="nav navbar-nav navbar-right right-dropd">
+	               {{#notifCond hideActivity true}}
+	                <li class="dropdown right-drop-down cubet_plus activity-toggler">
+	                  <a href="javascript:void(0)" class=" right-toggle activity-button">
+	                    <span class="glyphicon glyphicon-flash"></span>
+	                  </a>
+	                 </li>
+                    {{/notifCond}}
+                  <li class="dropdown right-drop-down cubet_plus">
+                    {{#notifCond searchPage true}}
+                    <a href="/search?tab=0" class="right-toggle search-icon"><span class="glyphicon glyphicon-search"></span></a>
+                    {{/notifCond}}
+                    <a href="" class="dropdown-toggle right-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/timeline">Timeline</a></li>
+                      <li><a href="/addpin" data-toggle="modal" data-target="#myModal2" id="addpin">Add Pin</a></li>
+                      <li><a href="/mostrepin" >Most Repinned</a></li>
+                      <li><a href="/mostlike"  >Most Liked</a></li>
+                      <li><a href="/addcategory" data-toggle="modal" data-target="#myModal7" >Create Category</a></li>
+                      <li><a href="/addboard" data-toggle="modal" data-target="#myModal4" >Create Board</a></li>
+                      <li><a href="/pins">List Pins</a></li>
+                      <li><a href="/boards"   >List Boards</a></li>
+                      <li><a href="/categories"   >List Categories</a></li>
+                    </ul>
+                  </li>
+                <li class="dropdown right-drop-down cubet_name"> <a href="javascript:;" class="dropdown-toggle profile-toggle-list" data-toggle="dropdown">
+                {{#if loiginuser}}
+                <span><img width="30" height="30" {{#if user_image}} src="/user_images/thumb/{{user_image}}" {{else}} src="/default/images/profile-pic.png" {{/if}}></span>
+                <span class="user-info">{{loiginuser}}</span>
+                </a>
+                  <ul class="dropdown-menu user_add_drop">
+                      <li><a   href="/user/{{loggeduser_id}}">Profile</a></li>
+                    <li><a  data-target="#myModal3" data-toggle="modal" href="/settings">Settings</a></li>
+                    <li><a id="logoutButton" href="/logout">Logout</a></li>
+                  </ul>
+                {{/if}}
+                </li>
+                <li class="dropdown right-drop-down cubet_commment"> <a id="comment_display"  href="#" class="dropdown-toggle notify" data-toggle="dropdown">
+                <span id="comment_section"  class="glyphicon  {{#unless notification_count}} glyphicon-comment {{/unless}}">{{#if notification_count}} {{notification_count}}{{/if}}</span></a>
+                  <ul class="dropdown-menu cubet_comment_sub">
+                 {{#if notification_count}} {{else}}<li><a id="new_notify" href="#"> No new notifications</a></li>{{/if}}
+                    {{#each notifications}}
+                    <li><a class="notifi_li" href="javascript:;">{{{notification}}}</a></li>
+                    {{/each}}
+                  </ul>
+                </li>
+                </ul>
+              </div>
+              <!-- end .cubet_pin_main -->
+            </div>
+            <!-- end .logged_bar -->
+        {{else}}
+            {{#notifCond searchPage true}}
+            <div class="icon_block icon_out">
+              <a href="/search?tab=0" class="search-icon"><span class="glyphicon glyphicon-search cubetlogin"></span></a>
+            </div>
+            {{/notifCond}}
+            <div class="icon_block icon_out">
+              <a href="/login"><span class="glyphicon glyphicon-log-in cubetlogin"></span></a>
+            </div>
+            <!-- end .icon_block -->
+        {{/if}}
+      </div>
+    </div>
+    <!-- end .main_box -->
+  </div>
+</header>
+<div class="btn_block orange_btn_block hide" id="newItemsBtn">
+  <a href="javascript:;" class="orange_btn line_top_btn desktop">View Stories</a>
+  <a href="javascript:;" class="orange_btn mobile">View Stories</a>
+</div>
+
+<div id="menu">
+
+<a href="javascript:;" class="close"></a>
+<ul>
+<li class="active"><a href="/timeline">Home</a></li>
+</ul>
+<ul class="nav_scoll">
+{{#each category}}
+<li><a href="/category/{{_id}}" title="{{category_name}}">{{category_name}}</a></li>
+{{/each}}
+</ul>
+</div>
+{{#notifCond hideActivity true}}
+{{> activity this}}
+{{/notifCond}}
+
+
+<!-- HEADER END -->

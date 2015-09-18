@@ -1,0 +1,188 @@
+<div class="modal_pou_up">
+  <div class="edit_user_top_ab3 custom-model edit_user_top">
+    <div class="modal-content">
+      <div class="modal-header gap">
+        <button type="button" class="close_yellow" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+
+      <!--  Head  -->
+      <div class="edit_user">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="edit_user_web_site">
+              <div id="pop_cont">
+                <h1>Edit Profile</h1>
+                <p>&nbsp;</p>
+                <span style="color:red;" class="brderrmsg">{{msg}}</span>
+
+                <form name="user_form" id="user_form" method="post" action="/user/update">
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_username">Username</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input placeholder="Username" type="text" id="edituser_username" name="username" class="inputText" value="{{data.username}}" readonly/>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_name">Full Name</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input placeholder="Full Name (Required)" type="text" id="edituser_name" name="name" class="inputText" value="{{data.name}}" required/>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_email">Email</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input placeholder="Email (Required)" type="text" id="edituser_email" name="email" class="inputText" value="{{data.email}}" required/>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_summary">Summary</label>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea placeholder="Summary" id="edituser_summary" name="summary" class="inputText">{{data.summary}}</textarea>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_summary">Affiliation</label>
+                    </div>
+                    <div class="col-md-10">
+                      <div class="radio-group">
+                        <label class="radio-inline"><input type="radio" name="affiliation" value="university"
+                          {{#ifCond data.affiliation 'university'}}checked{{/ifCond}}>University</label>
+                        <label class="radio-inline"><input type="radio" name="affiliation" value="organization"
+                          {{#ifCond data.affiliation 'organization'}}checked{{/ifCond}}>Organization</label>
+                        <label class="radio-inline"><input type="radio" name="affiliation" value="researcher"
+                          {{#ifCond data.affiliation 'researcher'}}checked{{/ifCond}}>Independent Researcher</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row affiliation_university">
+                    <div class="col-md-2 col-md-offset-2 label_div">
+                      <label>Name</label>
+                    </div>
+                    <div id="edituser_affiliation_university" class="col-md-8">
+                      <input placeholder="Name" type="text" name="affiliation_university"
+                             class="inputText typeahead" value="{{#ifCond data.affiliation 'university'}}{{data.affiliation_name}}{{/ifCond}}"
+                             autocomplete="off" spellcheck="false" />
+                    </div>
+                  </div>
+
+                  <div class="row affiliation_organization hide">
+                    <div class="col-md-2 col-md-offset-2 label_div">
+                      <label>Name</label>
+                    </div>
+                    <div id="edituser_affiliation_organization" class="col-md-8">
+                      <input placeholder="Name" type="text" name="affiliation_organization"
+                             class="inputText typeahead" value="{{#ifCond data.affiliation 'organization'}}{{data.affiliation_name}}{{/ifCond}}"
+                             autocomplete="off" spellcheck="false" />
+                    </div>
+                  </div>
+
+                  <div class="row affiliation_url">
+                    <div class="col-md-2 col-md-offset-2 label_div">
+                      <label>URL</label>
+                    </div>
+                    <div id="edituser_affiliation_url" class="col-md-8">
+                      <input placeholder="URL (http://www.google.com)" type="text" name="affiliation_url"
+                             class="inputText" value="{{data.affiliation_url}}"
+                             spellcheck="false" />
+                    </div>
+                  </div>
+
+                  <div class="row affiliation_department">
+                    <div class="col-md-2 col-md-offset-2 label_div">
+                      <label>Department</label>
+                    </div>
+                    <div id="edituser_affiliation_department" class="col-md-8">
+                      <input placeholder="Department" type="text" name="affiliation_department"
+                             class="inputText typeahead" value="{{data.affiliation_department}}"
+                             autocomplete="off" spellcheck="false" />
+                    </div>
+                  </div>
+
+                  <div class="row affiliation_position">
+                    <div class="col-md-2 col-md-offset-2 label_div">
+                      <label>Position</label>
+                    </div>
+                    <div id="edituser_affiliation_position" class="col-md-8">
+                      <input placeholder="Position" type="text" name="affiliation_position"
+                             class="inputText typeahead" value="{{data.affiliation_position}}"
+                             autocomplete="off" spellcheck="false" />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_country">Country</label>
+                    </div>
+                    <div class="col-md-10">
+                      <select name="country" id="edituser_country" class="inputText">
+                        <option value="" selected="selected">Select country</option>
+                        {{#each countries}}
+                        <option value="{{this.name}}" {{sel this.name ../data.country}}>{{this.name}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-2 label_div">
+                      <label for="edituser_interests">Research Interests</label>
+                    </div>
+                    <div class="col-md-10">
+                      <div class="edit_user_tag_boxs row">
+                        {{#each data.interests}}
+                        <span class="edit_user_tags">
+                          <a href="javascript:;" class="del_btn"></a>
+                          <a href="javascript:;" class="text_btn">{{this}}</a>
+                        </span>
+                        {{/each}}
+                      </div>
+                      <div class="row">
+                        <div id="edituser_interests_new" class="col-md-9">
+                          <input placeholder="Research Interests" type="text" id="edituser_interests_new_input" name="interests_new"
+                                 class="inputText typeahead" value=""
+                                 autocomplete="off" spellcheck="false" />
+                        </div>
+                        <div class="col-md-3 edit_user_tag_input">
+                          <span class="add_new_tags hide">
+                            <a href="javascript:;"  class="add_new">Add new</a>
+                          </span>
+                        </div>
+                      </div>
+                      <input hidden="hidden" type="text" id="edituser_interests" name="interests"
+                             class="inputText" value="{{data.interests}}"/>
+                    </div>
+                  </div>
+
+                  <input type="submit" name="update_user" id="update_user" value="Update" class="submit"/>
+
+                </form>
+
+              </div>
+              <!--</form>-->
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  initEditUserModal();
+</script>

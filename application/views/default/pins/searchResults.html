@@ -1,0 +1,126 @@
+{{#if results.totalCount}}
+    <h3 id="search_res_cnt" class="hide">{{results.totalCount}} result{{#notifCond results.totalCount 1}}s{{/notifCond}} found</h3>
+    <input type="hidden" id="totalCount" value="{{results.totalCount}}" />
+    {{#if results.users}}
+       <div class="boards_contents cont-fixed tab-content-search-result masonry current">
+        {{#each results.users}}
+            <div class="element clearfix">
+                <div id="myCarousel2_{{_id}}" class="carousel slide custom">
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                        <div class="active item">
+                            <a href="/user/{{_id}}">
+                                <img width="68px" maxheight="68px" {{#if image}} src="/user_images/{{image}}" {{else}} src="/default/images/user.png" {{/if}}>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Carousel nav -->
+                    <div class="post-content">
+                        <a href="/user/{{_id}}" class="desc">
+                            <div>{{name}}</div>
+                        </a>
+                    </div>
+                    <div class="post-info-inner clearfix">
+                        <span class="icon-users" style="font-size: 14px"></span><span class="icon_board_text userfollowercount">{{followercount}}</span>
+                        <span class="glyphicon glyphicon-tags icon_board"></span><span class="icon_board_text">{{pincount}}</span>
+                        {{!display follow button only for logged users and user can't follow himself}} 
+                        {{#notifCond ../loggeduser_id _id}}
+                               {{#ifCond userfollow '0'}}
+                                <a href="javascript:void(0)" class="cubt_folw" id="user_follow_{{_id}}" onclick="userFollow('{{_id}}','{{loggeduser_id}}')">Follow</a>
+                               {{/ifCond}}
+                               {{#ifCond userfollow '1'}}
+                                <a href="javascript:void(0)" class="cubt_folw cubt_un_folw" id="user_unfollow_{{_id}}" onclick="userUnfollow('{{_id}}','{{loggeduser_id}}')">Unfollow</a>
+                               {{/ifCond}}
+                        {{/notifCond}}
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if results.categories}}
+       <div class="categories_contents cont-fixed tab-content-search-result masonry current">
+        {{#each results.categories}}
+            <div class="element clearfix">
+                <div id="myCarousel2_{{_id}}" class="carousel slide custom">
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                        <div class="active item">
+                            <a href="/category/{{_id}}">
+                            <img src="{{#if image}}/categories/{{image}}{{/if}}"/>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Carousel nav -->
+                    <div class="post-content">
+                        <a href="/category/{{_id}}" class="desc">
+                            <div>{{category_name}}</div>
+                        </a>
+                    </div>
+                    <div class="post-info-inner clearfix">
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if results.boards}}
+       <div class="boards_contents cont-fixed tab-content-search-result masonry current">
+        {{#each results.boards}}
+            <div class="element clearfix">
+                <div id="myCarousel2_{{_id}}" class="carousel slide custom">
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                        <div class="active item">
+                            <a href="/board/{{_id}}">
+                                <img src="/boards/{{image}}" />
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Carousel nav -->
+                    <div class="post-content">
+                        <a href="/board/{{_id}}" class="desc">
+                            <div>{{board_name}}</div>
+                        </a>
+                    </div>
+                    <div class="post-info-inner clearfix">
+                        {{#if loggeduser_id}} {{#notifCond loggeduser_id creator}} {{#ifCond boardfollow '0'}}
+                        <a href="javascript:void(0)" class="cubt_folw" id="follow_{{_id}}" onclick="boardFollow('{{_id}}','{{creator}}')">Follow</a> {{/ifCond}} {{#ifCond boardfollow '1'}}
+                        <a href="javascript:void(0)" class="cubt_folw cubt_un_folw" id="unfollow_{{_id}}" onclick="boardUnfollow('{{_id}}','{{creator}}')">Unfollow</a> {{/ifCond}} {{/notifCond}} {{/if}}
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if results.pins}}
+       <div class="pins_contents cont-fixed tab-content-search-result masonry current">
+        {{#each results.pins}}
+            {{#ifCond pin_type 'web_page'}}
+                {{> pinvieweb this }}
+            {{/ifCond}}
+
+            {{#ifCond pin_type 'image'}}
+                {{> pinviewimage this}}
+            {{/ifCond}}
+
+            {{#ifCond pin_type 'url_image'}}
+                {{> pinviewimage this}}
+            {{/ifCond}}
+
+            {{#ifCond pin_type 'pdf'}}
+                {{> pinviewpdf this}}
+            {{/ifCond}}
+        {{/each}}
+        </div>
+    {{/if}}
+{{else}}
+<h3 class="no-results">Sorry, nothing found.</h3>
+{{/if}}
+

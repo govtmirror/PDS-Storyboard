@@ -1,0 +1,91 @@
+<div class="wrap" id="timeline_{{_id}}">
+  <span class="icon icon_plus"><i></i></span>
+  <div class="timeline_content">
+    <div class="timeline_details">
+      <div class="person_detail">
+        <a href="{{siteURL}}/user/{{user_id}}" class="subtle">
+          {{#if creator_image}}
+          <img src="{{siteURL}}/user_images/thumb/{{creator_image}}" />
+          {{else}}
+          <image src="/default/images/profile-pic.png" />
+          {{/if}}
+        </a>
+        <div class="contents">
+          <p><a href="{{siteURL}}/user/{{user_id}}">{{creator_name}}</a></p>
+          <span>{{timeAgo time}}</span>
+        </div>
+      </div>
+      <!-- end .person_detail -->
+      <div class="contentAction pin carousel slide custom">
+        <div class="description">
+          <div class="button-div">
+            <a href="/repinload/{{_id}}" data-toggle="modal" data-target="#myModal5" id="repin_{{_id}}" style="padding-left:5px"><span class="re-pin">Pin it</span></a>
+          </div>
+
+          <div class="description-content" style="margin-top: -12px;">
+            <a href="/pin/{{_id}}">
+              <p>{{substrByWordLimit description 120}}</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="pictureFrame">
+            <a href="#">
+              <img class="pictureFrameImg" src="{{thumb}}">
+            </a>
+          </div>
+          <div style="display: none;" data-toggle="modal" data-target="#myModal"> </div>
+          <a href="/pin/{{_id}}" class="time_1 icon_search"> <i></i> </a>
+        {{#ifCond pdf_type 'local_pdf'}}
+            <a class="time_2 icon_link" href="/pdfview?pdfid={{pdf_id}}" target="_blank"> <i></i> </a>
+        {{/ifCond}}
+        {{#ifCond pdf_type 'web_pdf'}}
+            <a class="time_2 icon_link" href="{{pdf_id}}" target="_blank"> <i></i> </a>
+        {{/ifCond}}
+
+        </div>
+
+        <ul class="statusBar">
+          <li class="dateStatus">
+            <span class="icon_gray_calendar"></span>
+            <span class="data"> {{pinDate time}} </span>
+          </li>
+          <li class="heartStatus glyphContainer">
+            {{#ifCond pinlike '1'}}
+            <a href="javascript:void(0)" class="glyphicon glyphicon-heart heartStatusLink " {{#unless loggeduser_id}}style="pointer-events:none;"{{/unless}} id="like_{{_id}}" onclick="pinlike('{{_id}}', this)"></a>
+            {{/ifCond}}
+            {{#ifCond pinlike '0'}}
+            <a href="javascript:void(0)" class="glyphicon glyphicon-heart heartStatusLink active" {{#unless loggeduser_id}}style="pointer-events:none;"{{/unless}} id="like_{{_id}}" onclick="pinUnlike('{{_id}}', this)"></a>
+            {{/ifCond}}
+            <span class="text" ><a class="pincount" id="pincount_{{_id}}" style="pointer-events:none;" href="#">{{pinlikecount}}</a></span>
+          </li>
+          <li class="commentStatus">
+            <div class="commentButton">
+              <span class="glyphicons glyphicons-comments"></span>
+              <!-- <span class="data"> 2 </span> -->
+            </div>
+          </li>
+          <li class="linkStatus glyphContainer">
+            {{#if source_url}}
+            <a href="{{source_url}}" target="_blank">
+              <span class="glyphicon glyphicon-link linkStatusLink"></span>
+            </a>
+            {{/if}}
+            {{#if loggeduser_id}}
+                <a href="/reportload/{{_id}}" class="glyphicon glyphicon-flag date" data-toggle="modal" data-target="#myModal6" id="repin_{{_id}}" ></a>
+            {{/if}}
+          </li>
+        </ul>
+        <!--end statusBar -->
+
+        <div class="disqusWidgetContainer">
+          <input type="hidden" name="type" value="pin" />
+          <input type="hidden" name="id" value="{{_id}}" />
+          <input type="hidden" name="description" value="{{description}}" />
+        </div><!--end disqusWidgetContainer -->
+
+      </div><!-- contentAction -->
+    </div><!-- end .timeline_details -->
+  </div><!-- end .timeline_content -->
+</div><!-- end .wrap -->

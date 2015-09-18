@@ -1,0 +1,91 @@
+<div class="wrap" id="timeline_{{_id}}">
+  <span class="icon icon_plus"><i></i></span>
+  <div class="timeline_content">
+    <div class="timeline_details">
+      <div class="person_detail">
+        <a href="{{siteURL}}/user/{{creator}}" class="subtle">
+          {{#if creator_image}}
+          <img src="{{siteURL}}/user_images/thumb/{{creator_image}}">
+          {{else}}
+          <image src="/default/images/profile-pic.png">
+            {{/if}}
+        </a>
+        <div class="contents">
+          <p><a href="{{siteURL}}/user/{{creator}}">{{creator_name}}</a></p>
+          <span>{{timeAgo timestamp}}</span>
+        </div>
+      </div>
+      <!-- end .person_detail -->
+
+      <div class="contentAction board carousel slide custom">
+        <div class="description">
+          <div class="button-div">
+            {{#if loggeduser_id}}
+            {{#notifCond loggeduser_id creator}}
+            {{#ifCond boardfollow '0'}}
+            <a href="javascript:void(0)" class="cubt_folw" id="follow_{{_id}}" onclick="boardFollow('{{_id}}','{{creator}}')">Follow</a>
+            {{/ifCond}}
+            {{#ifCond boardfollow '1'}}
+            <a href="javascript:void(0)" class="cubt_folw cubt_un_folw" id="unfollow_{{_id}}" onclick="boardUnfollow('{{_id}}','{{creator}}')">Unfollow</a>
+            {{/ifCond}}
+            {{/notifCond}}
+            {{/if}}
+          </div>
+
+          <div class="description-content" style="margin-top: -12px;">
+            <a href="/board/{{_id}}">
+              <p>{{board_name}}</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <div {{#ifCond @index 0}} class="pictureFrame active item2"{{else}} class="pictureFrame item2" {{/ifCond}} >
+            <a href="#">
+              <img class="pictureFrameImg" src="/boards/{{image}}">
+            </a>
+          </div>
+          <div style="display: none;" data-toggle="modal" data-target="#myModal"></div>
+          <a href="/board/{{_id}}" class="time_1 {{#unless domain}} time_1_change_width {{/unless}} icon_search" > <i></i> </a>
+        </div>
+
+        <ul class="statusBar">
+          <li class="dateStatus">
+            <span class="icon_gray_calendar"></span>
+            <span class="data"> {{pinDate timestamp}} </span>
+          </li>
+          <li class="boardStatus">
+            <span class="glyphicon glyphicon-tags icon_board"></span>
+            <span class="data"> {{boardpinscount}} </span>
+          </li>
+          <li class="userStatus">
+            <span class="icon_gray_user_group"></span>
+            <span class="data"> {{boardfollowcount}} </span>
+          </li>
+          <li class="commentStatus">
+            <div class="commentButton">
+              <span class="glyphicons glyphicons-comments"></span>
+              <!-- <span class="data"> 2 </span> -->
+            </div>
+          </li>
+          <li class="linkStatus glyphContainer">
+            {{#if source_url}}
+            <a href="{{source_url}}" target="_blank">
+              <span class="glyphicon glyphicon-link linkStatusLink"></span>
+            </a>
+            {{/if}}
+          </li>
+        </ul>
+        <!--end statusBar -->
+
+        <div class="disqusWidgetContainer">
+          <input type="hidden" name="type" value="board" />
+          <input type="hidden" name="id" value="{{_id}}" />
+          <input type="hidden" name="description" value="{{description}}" />
+        </div><!--end disqusWidgetContainer -->
+
+      </div><!-- contentAction -->
+    </div><!-- end .timeline_details -->
+  </div><!-- end .timeline_content -->
+</div><!-- end .wrap -->

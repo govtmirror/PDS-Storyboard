@@ -1,0 +1,46 @@
+<div class="row-fluid">
+    <div class="span12">
+        <div class="alert alert-block {{$ 'getFlashMessageStatus'}}">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading">{{$ 'getFlashMessageHead'}}!</h4>
+            {{$ 'getFlashMessage'}}
+        </div>
+        <div class="box">
+            <div class="box-head tabs">
+                <h3>Disqus Settings</h3>
+            </div>
+            <div class="box-content box-nomargin">
+                <div class="tab-content">
+                    <div class="box-content">
+                        <form action="/admin/update-disqus-settings" method="post" class="validate form-horizontal">
+                            <div class="control-group">
+                                <label for="DISQUS_SHORTNAME" class="control-label">Disqus shortname</label>
+                                <div class="controls">
+                                    <input {{#ifCond data.DISQUS_SHORTNAME 'false'}}disabled{{/ifCond}} type="text" name="DISQUS_SHORTNAME" id="DISQUS_SHORTNAME" value="{{#if data.DISQUS_SHORTNAME}}{{data.DISQUS_SHORTNAME}}{{/if}}">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="DISQUS_API_SECRET_KEY" class="control-label">Disqus API Secret Key</label>
+                                <div class="controls">
+                                    <input {{#ifCond data.DISQUS_API_SECRET_KEY 'false'}}disabled{{/ifCond}} type="text" name="DISQUS_API_SECRET_KEY" id="DISQUS_API_SECRET_KEY" value="{{#if data.DISQUS_API_SECRET_KEY}}{{data.DISQUS_API_SECRET_KEY}}{{/if}}">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="DISQUS_API_PUBLIC_KEY" class="control-label">Disqus API Public Key</label>
+                                <div class="controls">
+                                    <input {{#ifCond data.DISQUS_API_PUBLIC_KEY 'false'}}disabled{{/ifCond}} type="text" name="DISQUS_API_PUBLIC_KEY" id="DISQUS_API_PUBLIC_KEY" value="{{#if data.DISQUS_API_PUBLIC_KEY}}{{data.DISQUS_API_PUBLIC_KEY}}{{/if}}">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <input type="submit" class="btn btn-primary addAdminBtn" value="Update">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

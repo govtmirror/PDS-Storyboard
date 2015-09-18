@@ -1,0 +1,31 @@
+{
+    "css": [
+        "bootstrap",
+        "bootstrap-theme",
+        "stylesheet",
+        "flexslider",
+        "style",
+        "main",
+        "boaard",
+        "mediaelementplayer.min",
+        "profile_setting",
+        "add_pin",
+        "jqtransform",
+        "jquery.mCustomScrollbar",
+        "edit_user",
+        "jquery.searchbar",
+        "timeline"
+    ],
+    "js": [
+        "jquery-1.8.2.min",
+        "vendor/modernizr-2.6.2.min",
+        "bootstrap.min",
+        "jquery.flexslider",
+        "plugins",
+        "pincreation",
+        "mediaelement-and-player.min",
+        "jquery.jqtransform",
+        "search-bar",
+        "jquery.searchbar"
+    ]
+}

@@ -1,0 +1,11 @@
+        Group = Mapping
+          ProjectionName     = SimpleCylindrical
+          CenterLongitude    = 0.0
+          TargetName         = MOON
+          EquatorialRadius   = 1737400.0 <meters>
+          PolarRadius        = 1737400.0 <meters>
+          LatitudeType       = Planetocentric
+          LongitudeDirection = PositiveEast
+          LongitudeDomain    = 180
+          PixelResolution    = 1.0 <meters/pixel>
+        End_Group

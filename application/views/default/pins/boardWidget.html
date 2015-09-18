@@ -1,0 +1,60 @@
+<div class="element clearfix">
+  <div id="myCarousel2_{{_id}}" class="carousel slide custom">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+      <div class="active item">
+        <a href="/board/{{_id}}">
+          <img src="/boards/{{image}}"/>
+        </a>
+      </div>
+
+    </div>
+    <!-- Carousel nav -->
+    <div class="post-content">
+      <a href="/board/{{_id}}" class="desc pull-left">
+        <div>{{board_name}}</div>
+      </a>
+      <div class="persnl_details clearfix board_show pull-right">
+        <a href="{{siteURL}}/user/{{creator}}" class=" pull-right">
+          <img src="{{siteURL}}/user_images/thumb/{{creator_image}}" alt="taylor">
+        </a>
+        <div class="contns pull-right">
+          <a href="{{siteURL}}/user/{{creator}}" class="subtle">
+            <span>{{substrFirstName creator_name}}</span>
+            {{substrLastName creator_name}}
+          </a>
+        </div>
+      </div>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="post-info-inner clearfix">
+      <span class="icon_gray_calendar"></span>
+      <span class="data gray_calendar_date"> {{pinDate timestamp}} </span>
+
+      <span class="text">
+        <a class="pincount" style="pointer-events:none;" href="">
+          <span class="glyphicon glyphicon-tags icon_board"></span> {{boardpinscount}}
+        </a>
+      </span>
+
+      <span class="text">
+        <a class="pincount" href="" style="pointer-events:none;">
+          <span class="icon_gray_user_group"></span> {{boardfollowcount}}
+        </a>
+      </span>
+
+      {{#if loggeduser_id}}
+      {{#notifCond loggeduser_id creator}}
+      {{#ifCond boardfollow '0'}}
+      <a href="javascript:void(0)" class="cubt_folw" id="follow_{{_id}}" onclick="boardFollow('{{_id}}','{{creator}}')">Follow</a>
+      {{/ifCond}}
+      {{#ifCond boardfollow '1'}}
+      <a href="javascript:void(0)" class="cubt_folw cubt_un_folw" id="unfollow_{{_id}}" onclick="boardUnfollow('{{_id}}','{{creator}}')">Unfollow</a>
+      {{/ifCond}}
+      {{/notifCond}}
+      {{/if}}
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

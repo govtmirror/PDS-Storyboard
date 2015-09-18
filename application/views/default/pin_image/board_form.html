@@ -1,0 +1,108 @@
+<div class="modal_pou_up">
+  <div class="add_pin_top_ab3 custom-model add_pin_top">
+    <div class="modal-content">
+      <div class="modal-header gap">
+        <button type="button" class="close_yellow" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+
+      <!--  Head  -->
+      <div class="add_pin">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="add_pin_web_site">
+              <div id="pop_cont">
+                <h1>{{#if editing}}Edit{{else}}Add{{/if}} Board</h1>
+                <p>&nbsp;</p>
+                <span style="color:red;" class="msg">{{msg}}</span>
+
+                <form name="board_form" id="board_form" method="post" action="/{{#if editing}}edit/board/{{posted_data._id}}{{else}}board_action{{/if}}" enctype="multipart/form-data" onsubmit="$('#add_board').addClass('disable-like');">
+
+                  <br /><br />
+                  <span style="color:red;" class="msgCategory">{{msgCategory}}</span>
+                  <select name="category_id" required class="inputText">
+                    {{#if editing}}{{else}}
+                    <option value="" selected="selected">Select category</option>
+                    {{/if}}
+                    {{#each categories}}
+                    <option value="{{this._id}}" {{sel this._id ../posted_data.category_id}}>{{this.category_name}}</option>
+                    {{/each}}
+                  </select>
+
+                  <br /><br />
+                  <span style="color:red;" class="msgName">{{msgName}}</span>
+
+                  <!--    <select name="cost" required  class="inputText">
+                          <option value="">Select cost</option>
+                          {{#each cost}}
+                          <option value="{{this.cost}}" {{sel this.cost ../posted_data.cost}} >{{this.cost}}</option>
+                          {{/each}}
+                      </select>
+
+                      <br /><br />-->
+
+
+                  <input placeholder="Board Name" type="text" name="board_name"  class="inputText" value="{{posted_data.board_name}}" required/>
+
+                  <br /><br />
+                  <span style="color:red;" class="msgDescription">{{msgDescription}}</span>
+
+                  <textarea  placeholder="Description" name="description" required  class="inputText">{{posted_data.description}}</textarea>
+                  {{#if editing}}
+                  <br /><br />
+                  <img src="/boards/thumb/{{posted_data.image}}" class="inputText inputImage">
+                  {{/if}}
+                  <br /><br />
+                  <span style="color:red;" class="msgImage">{{msgImage}}</span>
+                  <input type="file" name="board_img" id="board_img" {{#if editing}}{{else}}required{{/if}}  class="inputText" accept="image/*"/>
+                  <br /><br />
+                  <input type="submit" name="add_board" id="add_board" value="{{#if editing}}Update{{else}}Add{{/if}}" class="submit"/>
+
+                </form>
+
+              </div>
+
+              <!--</form>-->
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ajax form to validate files
+  $('#board_form').ajaxForm({
+    beforeSend: function(){
+      $('.loader').show();
+    },
+    success:function(data) {
+      $(".msgCategory").html('');
+      $(".msgName").html('');
+      $(".msgDescription").html('');
+      $(".msgImage").html('');
+      if(data.error==1){
+        $(".msg").html(data.msg);
+        $(".msgCategory").html(data.msgCategory);
+        $(".msgName").html(data.msgName);
+        $(".msgDescription").html(data.msgDescription);
+        $(".msgImage").html(data.msgImage);
+      } else {
+        $('#myModal4').modal('hide');
+        location.href = '/board/'+data;
+      }
+    },
+    error: function(e){
+      $(".msg").html(e);
+    },
+    complete: function(jqxhr, status, error) {
+      $('.loader').hide();
+      // $('#webForm')[0].reset();
+      $('#add_board').removeClass('disable-like');
+    }
+  });
+  $("#add_board").click(function(){
+    $("#board_form").validate();
+  });
+</script>

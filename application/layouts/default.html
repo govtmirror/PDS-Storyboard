@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/default/css/ie8-and-down.css" />
+<![endif]-->
+<html class="no-js">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{{getDefine 'site_title'}}</title>
+
+        <meta property="og:type" content="og:product" />
+        <meta property="og:title" content="CubetboardV2" />
+        {{#if ogImage}}<meta property="og:image"                  content="{{ogImage}}" />{{/if}}
+        {{#if ogDesc}}<meta property="og:description"            content="{{ogDesc}}" />{{/if}}
+        {{#if ogLink}}<meta property="og:url"                    content="{{ogLink}}" />{{/if}}
+
+        <meta name="description" content="{{getDefine 'meta_desc'}}">
+        <meta name="keywords" content="{{getDefine 'meta_keys'}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!--[if lt IE 9]>
+               <link rel="stylesheet" type="text/css" href="/default/css/ie8-and-down.css" />
+        <![endif]-->
+        <!--<link rel="stylesheet" href="/mplayer/css/style1.css" media="screen" />-->
+        {{> getSleekScripts}}
+<!--        <link rel="stylesheet" href="/default/css/timeline.css"> -->
+        <!--<link rel="chrome-webstore-item"
+          href="https://chrome.google.com/webstore/detail/iocdfiikhpcdejdpbkpnfnchjdmcianf"/>-->
+        <link rel="stylesheet" href="/default/css/loader.css" />
+        <link rel="stylesheet" href="/default/css/fontello.css" />
+        <script type="text/javascript" src="/default/js/jquery.masonry.min.js"></script>
+        <script src="/default/js/jquery.nicescroll.min.js"></script>
+        <script src="/default/js/jquery-validation.js"></script>
+        <script src="/default/js/userProfile.js"></script>
+        <script src="/default/js/typeahead.js"></script>
+        <script type="text/javascript" src="/default/js/imagesloaded.pkgd.min.js"></script>	
+    </head>
+    <body>
+        {{{body}}}
+        <div class="loader">
+            <img src="/default/images/ajax-loader.gif"/>
+        </div>
+    </body>
+
+    <script type="text/javascript" src="/default/js/timeline.js"></script>
+    <script type="text/javascript" src="/default/js/pinList.js"></script>
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/default/js/socket_p1.js"></script>	
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/default/js/jquery.placeholder.js"></script>	
+    <![endif]-->
+</html>

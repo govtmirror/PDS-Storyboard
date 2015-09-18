@@ -1,0 +1,223 @@
+/*default style*/
+li{
+  list-style: none;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,a:focus {
+    outline: none;
+}
+/*searchbar style start*/
+.search-bar {
+    width: 100%;
+    min-height: 30px;
+    overflow: visible;
+}
+.search-bar.sigle-tag-mode {
+    width: auto;
+    float: left;
+    min-height: 23px;
+    height: 23px;
+}
+.search-bar-wrapper {
+  font-family: 'Helvetica Neue', Roboto, Arial, 'Droid Sans', sans-serif;
+  height: 30px;
+  overflow: hidden;
+}
+    .search-bar-wrapper.expanded {
+        height: auto !important;
+        overflow: visible;
+    }
+.search-bar .search-bar-wrapper {
+    min-height: 28px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+    background-color: #fff;
+    margin: 4px 0;
+    vertical-align: bottom;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+  .search-bar .search-bar-wrapper .tag-wrapper {
+    float: left;
+    left: 0;
+    padding-left: 10px;
+    padding-right: 50px;
+  }
+    .tag-wrapper .tag-text {
+      color: #000;
+      font-size: 14px;
+    }
+    .tag-wrapper .tag-text .key {
+        font-weight: bold;
+        padding-right: 3px;
+    }
+    .tag-wrapper .tag-text .value {
+        font-weight: normal;
+        padding-left: 3px;
+    }
+    .search-bar .search-bar-wrapper .tag-wrapper a {
+      margin-right: 5px;
+      display: inline-block;
+      cursor: pointer;
+      border: 1px solid #d2d2d2;
+      white-space: pre;
+      padding: 4px 5px;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border-radius: 5px;
+      background: #F1F1F1;
+      background: -webkit-linear-gradient(top, #FDFDFD 0%, #E3E3E3);
+      background: -moz-linear-gradient(top, #FDFDFD 0%, #E3E3E3);
+      background: -ms-linear-gradient(top, #FDFDFD 0%, #E3E3E3);
+      background: linear-gradient(top, #FDFDFD 0%, #E3E3E3);
+      padding: 2px 5px;
+      text-decoration: none;
+    }
+    .search-bar .search-bar-wrapper .tag-wrapper .close:after{
+        font-size: 8px;
+        color: #ccc;
+        position: relative;
+        text-align: center;
+    }
+    .search-bar .search-bar-wrapper .tag-wrapper .close{
+      font-size: 8px;
+      color: #ccc;
+      vertical-align: middle;
+      position: relative;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      background: #ddd;
+      text-align: center;
+      margin-left: 4px;
+      margin-top: -2px;
+      line-height: 10px;
+    }
+    .search-bar .search-bar-wrapper .tag-wrapper a:hover .close,.search-bar .search-bar-wrapper .tag-wrapper a:focus .close{
+        background: #78E0EF;
+        color: #fff;
+    }
+    .search-bar .search-bar-wrapper .tag-wrapper a:hover{
+        border-color: #78E0EF;
+    }
+    .search-bar .search-bar-wrapper .tag-wrapper a:focus {
+      border-color: #2099cc;
+      background: #DDEEFE;
+      background: -webkit-linear-gradient(top, #FDFDFD 0%, #BCDEFF);
+      background: -moz-linear-gradient(top, #FDFDFD 0%, #BCDEFF);
+      background: -ms-linear-gradient(top, #FDFDFD 0%, #BCDEFF);
+      background: linear-gradient(top, #FDFDFD 0%, #BCDEFF);
+    }
+  .search-bar .search-input-wrapper {
+      position: relative;
+      overflow: visible;
+      float: left;
+  }
+    .search-bar .search-input-wrapper input.search-input{
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        height: 28px;
+        outline: none;
+        font-size: 14px;
+    }
+
+      .search-bar .search-input-wrapper .search-bar-suggestions-wrapper{
+          position: absolute;
+          display: none;
+          background: #444;
+          margin: 2px 0 0;
+          padding: 5px 0;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          border-radius: 5px;
+          box-shadow: 1px 3px 5px rgba(128, 128, 128, 0.7);
+          z-index: 1000;
+          overflow: scroll;
+          overflow-x: hidden;
+      }
+      .search-bar.sigle-tag-mode .search-input-wrapper .search-bar-suggestions-wrapper{
+          z-index: 1001;
+      }
+      .search-bar.sigle-tag-mode .search-bar-wrapper {
+          background: transparent;
+          box-shadow: none;
+          border: none !important;
+      }
+      .search-bar.sigle-tag-mode .search-bar-wrapper input {
+          min-width: 0 !important;
+      }
+      .search-bar-suggestions-wrapper > ul {
+        color: #fff;
+        background: #444;
+        padding: 0;
+        margin: 0;
+      }
+      .search-bar-suggestions-wrapper ul li {
+        color: #fff;
+      }
+          .search-bar-suggestions-wrapper ul li.heading {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+          }
+              .search-bar-suggestions-wrapper ul li.heading span{
+                  padding-left: 10px;
+              }
+          .search-bar-suggestions-wrapper ul li.heading ul {
+            padding-left: 0;
+            margin-top: 5px;
+          }
+          .search-bar-suggestions-wrapper li.option {
+            font-weight: normal;
+            font-size: 14px;
+            padding: 2px 20px;
+            cursor: pointer;
+          }
+            .search-bar-suggestions-wrapper li.option:hover {
+              background: #373737;
+              color: #f90;
+            }
+          .search-bar-suggestions-wrapper ul li span.highlight {
+              color: #f90;
+              padding-left: 0;
+          }
+
+          .search-bar-suggestions-wrapper ul li.highlight {
+              background: #373737;
+              color: #f90;
+          }
+/*searchbar style end*/
+
+.tag-wrapper a {
+    float: left;
+    margin-top: 3px;
+}
+
+.tag-wrapper {
+    margin-right: 0;
+}
+.hidden-tags-count {
+    position: absolute;
+    top: 0;
+    right: 5px;
+}
+    .hidden-tags-count p {
+        margin: 2px 0;
+        color: #146eb4;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+/** Single tag mode styles **/
+.search-bar.sigle-tag-mode .search-bar-wrapper, .search-bar.sigle-tag-mode .search-bar-wrapper input{
+    height: 23px;
+}

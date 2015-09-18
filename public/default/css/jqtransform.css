@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* -------------
+ * Checkboxes
+ * ------------- */
+span.jqTransformCheckboxWrapper{
+	display:block;
+	float:left;
+}
+a.jqTransformCheckbox {
+	background-position: -194px -102px;
+	vertical-align: middle;
+	height: 20px;
+	width: 20px;
+	overflow: hidden;
+	display:block;/*display: -moz-inline-block;*/
+}
+
+/* -------------
+ * Checked - Used for both Radio and Checkbox
+ * ------------- */
+a.jqTransformChecked { background-position: -218px -102px;}
+
+/* -------------
+ * Selects
+ * ------------- */
+.form-container {
+	display: block;
+}
+.selects-container {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+}
+.selects-container select {
+  width: 100%;
+}
+.selects-container .jqTransformSelectWrapper {
+  position: relative;
+  height: 34px;
+  background: none;
+}
+.selects-container .jqTransformSelectWrapper div {
+  position: relative;
+  border: 1px solid #e6e6e6;
+  height: 35px;
+  background: #fff;
+}
+.selects-container .jqTransformSelectWrapper div:hover {
+  background: #fff;
+}
+.selects-container .jqTransformSelectWrapper div:hover span {
+  color: #333;
+}
+.selects-container .jqTransformSelectWrapper a.jqTransformSelectOpen {
+  background: url(/default/images/icon_select_arrow.png) no-repeat 0 0;
+  display: block;
+  position: absolute;
+  top: 9px;
+  right: 3px;
+  width: 16px;
+  height: 16px;
+}
+.selects-container .jqTransformSelectWrapper div:hover a.jqTransformSelectOpen {
+  background-position: 0 0;
+}
+.selects-container .jqTransformSelectWrapper div span {
+  font-size: 14px;
+  color: #777;
+  float: none;
+  position: absolute;
+  white-space: nowrap;
+  height: 35px;
+  line-height: 35px;
+  text-indent: 7px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.selects-container .jqTransformSelectWrapper ul {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  list-style: none;
+  background-color: #FFF;
+  border: 1px solid #e6e6e6;
+  border-top: 0;
+  display: none;
+  margin: 0;
+  padding: 0 0 6px 0;
+  height: auto !important;
+  border-bottom-left-radius: 5px;
+  -moz-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  overflow: auto;
+  overflow-y: auto;
+  z-index: 1000;
+}
+.selects-container .jqTransformSelectWrapper ul a {
+  display: block;
+  text-indent: 7px;
+  text-decoration: none;
+  line-height: 32px;
+  color: #777;
+  background-color: #fff;
+  font-size: 14px;
+}
+.selects-container .jqTransformSelectWrapper ul li:first-child a {
+	padding-top: 6px;
+	line-height: 24px;
+}
+.selects-container .jqTransformSelectWrapper ul a.selected {
+  color: #777;
+  background: #fff;
+}
+.selects-container .jqTransformSelectWrapper ul a:hover,
+.selects-container .jqTransformSelectWrapper ul a.selected:hover {
+  color: #333;
+  text-decoration: none;
+}
+.selects-container .whiteSelectBg {
+  background: url(../i/forms/select-left.png) no-repeat 0  -34px;
+}
+.selects-container .whiteSelectBg a.jqTransformSelectOpen {
+  background: url(../i/forms/select-right.png) no-repeat 0 -34px;
+}
+/* -------------
+ * Hidden - used to hide the original form elements
+ * ------------- */
+.jqTransformHidden {
+  display: none;
+}

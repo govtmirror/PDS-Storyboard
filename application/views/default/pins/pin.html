@@ -1,0 +1,319 @@
+{{> pinheader this}}
+{{!display board details}}
+
+{{#if board_detail}}
+<div id="board_container" class="leftmenu_adjst">
+  <div class="row row_min" style="visibility:  hidden;">
+    <div class="col-md-12 board_small"><span class="glyphicon glyphicon-th-list board_small_m"></span>{{board_detail}}</div>
+  </div>
+  <div class="row row_lrg">
+    <div class="col-md-3 board">
+      <img id="assetImg" {{#if board_image}} src="{{board_image}}" {{else}} src="/default/images/board.jpg" {{/if}}>
+    </div>
+    <div class="col-md-5 board">
+      <h2 id="assetName">{{board_detail}}</h2>
+      <h3></h3>
+      <p id="assetDesc">{{description}}</p>
+      {{#if can_manage_users}}
+      <a href="/manage_users/{{type}}/{{type_id}}" id="manageUsers" data-toggle="modal" data-target="#myModal8">Manage Users</a> |
+      <a href="/edit/{{type}}/{{type_id}}" id="editAsset" data-toggle="modal" data-target="#myModal{{#ifCond type 'board'}}4{{/ifCond}}{{#ifCond type 'category'}}7{{/ifCond}}">Update details</a>
+      {{/if}}
+    </div>
+
+    <div class="col-md-2  col-md-offset-2 board_right">
+      <img width="68px" height="68px" {{#if creator_image}} src="/user_images/{{creator_image}}" {{else}} src="/default/images/profile-pic2.png" {{/if}}>
+
+      <div class="follower">
+        <h2>{{#if creator_name}} {{creator_name}} {{else}} Admin User {{/if}}</h2>
+        <span class="icon-users"></span>
+        <span class="icon_board_text boardfollowecount">{{followercount}}</span>
+        <span class="glyphicon glyphicon-tags icon_board"></span>
+        <span class="icon_board_text">{{pincount}}</span>
+        {{!display follow button only for logged users}}
+
+        {{#if loggeduser_id}}
+        {{#notifCond loggeduser_id creator}}
+        {{#ifCond boardfollow '0'}}
+        <a href="javascript:void(0)" class="cubt_folw" id="follow_{{board_id}}" onclick="boardFollow('{{board_id}}','{{creator}}')">Follow</a>
+        {{/ifCond}}
+        {{#ifCond boardfollow '1'}}
+        <a href="javascript:void(0)" class="cubt_folw cubt_un_folw" id="unfollow_{{board_id}}" onclick="boardUnfollow('{{board_id}}','{{creator}}')">Unfollow</a>
+        {{/ifCond}}
+        {{/notifCond}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+    
+    {{/if}}
+    {{!display user details}} 
+    {{#if user_detail}}
+    <div id="user_container" class="leftmenu_adjst">
+      <div class="row row_min user_dis" style="visibility:  hidden;">
+        <div class="col-md-12 board_small"><span class="glyphicon glyphicon-th-list board_small_m"></span>{{creator_name}}</div>
+      </div>
+      <div class="row row_lrg user_margin">
+        <div class="col-md-8 col-md-offset-2 user_bg">
+          <div class="img">
+            <img width="68px" maxheight="68px" {{#if creator_image}} src="/user_images/{{creator_image}}" {{else}} src="/default/images/user.png" {{/if}}>
+            {{#ifCond listuser loggeduser_id}}
+            <br/>
+            <a class="edit-user" href="/user/edit" data-toggle="modal" data-target="#myModal9" id="editUser">Edit Profile</a>
+            {{/ifCond}}
+          </div>
+
+          <h2>
+            {{creator_name}}
+            <span style="font-size: 20px;">{{#if user.affiliation_position}}({{user.affiliation_position}}){{/if}}</span>
+          </h2>
+
+          {{#if user.summary}}
+          <h4><strong>Summary: </strong>{{user.summary}}</h4>
+          {{/if}}
+
+          {{#if user.affiliation}}
+          <h4><strong>Affiliation: </strong>
+            {{#ifCond user.affiliation 'researcher'}}
+              Independent Researcher
+            {{else}}
+              {{#if user.affiliation_name}}
+              {{user.affiliation_name}}
+              {{/if}}
+              {{#if user.affiliation_url}}
+              ({{user.affiliation_url}})
+              {{/if}}
+              {{#if user.affiliation_department}}
+              , {{user.affiliation_department}}
+              {{/if}}
+              {{#if user.affiliation_position}}
+              , {{user.affiliation_position}}
+              {{/if}}
+            {{/ifCond}}
+          </h4>
+          {{/if}}
+
+          {{#if user.interests}}
+          <h4>
+            <div class="profile_tag_boxs_label"><strong>Interests: </strong></div>
+            <div class="profile_tag_boxs">
+              {{#each user.interests}}
+              <span class="profile_tags">{{this}}</span>
+              {{/each}}
+            </div>
+          </h4>
+          {{/if}}
+
+          <h2>
+            <span class="icon-users" style="font-size: 14px"></span>
+            <span class="icon_board_text userfollowercount">{{followcount}}</span>
+            <span class="glyphicon glyphicon-tags icon_board"></span>
+            <span class="icon_board_text">{{pincount}}</span>
+            {{!display follow button only for logged users and user can't follow himself}}
+            {{#notifCond loggeduser_id listuser}}
+            {{#ifCond userfollow '0'}}
+            <a href="javascript:void(0)" class="cubt_folw" id="user_follow_{{listuser}}" onclick="userFollow('{{listuser}}','{{loggeduser_id}}')">Follow</a>
+            {{/ifCond}}
+            {{#ifCond userfollow '1'}}
+            <a href="javascript:void(0)" class="cubt_folw cubt_un_folw" id="user_unfollow_{{listuser}}" onclick="userUnfollow('{{listuser}}','{{loggeduser_id}}')">Unfollow</a>
+            {{/ifCond}}
+            {{/notifCond}}
+          </h2>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+<div id="view_switcher" class="pull-right">
+  <div class="btn-group" data-toggle="buttons">
+    <a class="btn btn-default active" data-toggle="tab" href="#tab-timeline">
+      <input type="radio" name="options" autocomplete="off" checked>
+      <input type="hidden" name="view_name" id="view_name" value="list"/>
+      <span class="glyphicon glyphicon-list"></span>
+    </a>
+    <a class="btn btn-default" data-toggle="tab" href="#tab-grid">
+      <input type="radio" name="options" autocomplete="off">
+      <input type="hidden" name="view_name" id="view_name" value="grid"/>
+      <span class="glyphicon glyphicon-th-large"></span>
+    </a>
+  </div>
+</div>
+<span class="clearfix"></span>
+
+<div class="disqusWidget">
+  <div class="new_bg" id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_config = function () {
+      {{#if SSO}}
+      this.page.remote_auth_s3 = '{{SSO.auth}}';
+      this.page.api_key = '{{SSO.pubKey}}';
+      {{/if}}
+
+      // This adds the custom login/logout functionality
+      this.sso = {
+        name:   "{{HOST}}",
+        button: location.origin+'/default/favicon.ico',
+        icon:   location.origin+'/default/favicon.ico',
+        url:    location.origin+'/login?disqus=true',
+        logout: location.origin+'/logout?disqus=true',
+        width:  "800",
+        height: "400"
+      };
+      // Interceps when user adds a comment on a pin
+      // and makes a request to save a story for this action
+      this.callbacks.onNewComment = [function(comment) {
+        $.ajax({
+          url: "/save_comment_story",
+          data: {
+            comment: comment.text,
+            pin_id: '{{pin._id}}'
+          },
+          type: 'post'
+        });
+      }];
+    };
+  </script>
+
+  <script type="text/javascript">
+    var disqus_shortname = '{{DEFINES.DISQUS_SHORTNAME}}';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      if($('head, body').find("script[src*='embed.js']").size() == 0) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+    })();
+  </script>
+
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
+</div><!--end disqusWidget -->
+
+<div class="tab-content">
+
+  <div role="tabpanel" class="tab-pane active" id="tab-timeline">
+    <div class="wrapper_main timeline_page" id="container-timeline">
+
+      <div class="timeline_contents">
+
+        {{#if data}}
+        {{#each data}}
+        {{!check the type of pins to select the view page}}
+
+        {{#ifCond pin_type 'web_page'}}
+        {{> pinvieweb2 this }}
+        {{/ifCond}}
+
+        {{#ifCond pin_type 'image'}}
+        {{> pinviewimage2 this}}
+        {{/ifCond}}
+
+        {{#ifCond pin_type 'url_image'}}
+        {{> pinviewimage2 this}}
+        {{/ifCond}}
+
+        {{#ifCond pin_type 'pdf'}}
+        {{> pinviewpdf2 this}}
+        {{/ifCond}}
+
+        {{/each}}
+        {{else}}
+        <p style="text-align: center;">Sorry! No pins here.</p>
+        {{/if}}
+        <div id="loadmoreajaxloader" style="display:none;">
+          <center><img src="/default/images/loader.jpeg" /></center>
+        </div>
+
+      </div>
+      <!-- end .timeline-contents -->
+
+    </div>
+
+  </div>
+  <!-- end #tab-timeline -->
+
+  <div role="tabpanel" class="tab-pane" id="tab-grid">
+    <div id="container" {{#ifCond siteLayout 'fixed'}}class="cont-fixed"{{/ifCond}} >
+      {{#if data}}
+      {{#each data}}
+      {{!check the type of pins to select the view page}}
+
+      {{#ifCond pin_type 'web_page'}}
+      {{> pinvieweb this }}
+      {{/ifCond}}
+
+      {{#ifCond pin_type 'image'}}
+      {{> pinviewimage this}}
+      {{/ifCond}}
+
+      {{#ifCond pin_type 'url_image'}}
+      {{> pinviewimage this}}
+      {{/ifCond}}
+
+      {{#ifCond pin_type 'pdf'}}
+      {{> pinviewpdf this}}
+      {{/ifCond}}
+
+      {{/each}}
+      {{else}}
+      <p style="text-align: center;">Sorry! No pins here.</p>
+      {{/if}}
+
+      <div id="loadmoreajaxloader" style="display:none;">
+        <center><img src="/default/images/loader.jpeg" /></center>
+      </div>
+    </div>
+    <!-- end id container -->
+  </div>
+  <!-- end #tab-grid -->
+</div>
+<!-- end .tab-content-->
+
+<div class="h_c" style="display:none">
+
+</div>
+<form method="get" class="searchform">
+  <input type="hidden" name="gridEndlimit" id="gridEndlimit" value="20"/>	
+  <input type="hidden" name="listEndlimit" id="listEndlimit" value="20"/>
+  <input type="hidden" name="endlimit" id="endlimit" value="20"/>
+  <input type="hidden" name="listtype" id="listtype" value="{{type}}"/>
+  <input type="hidden" name="list_id" id="list_id" value="{{type_id}}"/>
+  <input type="hidden" name="view_type" id="view_type" value="list">
+</form>
+
+<!-- this part for iframe pop up -->
+{{!set modal ids of pop up pages}}
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<!-- this part for iframe pop up for add pins-->
+<div class="modal fade" id="myModal2" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="myModal3" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- board -->
+<div class="modal fade" id="myModal4" tabindex="2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- repin -->
+<div class="modal fade" id="myModal5" tabindex="3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="myModal6" tabindex="4" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- category -->
+<div class="modal fade" id="myModal7" tabindex="5" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- user management -->
+<div class="modal fade" id="myModal8" tabindex="6" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- edit profile -->
+<div class="modal fade" id="myModal9" tabindex="7" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>

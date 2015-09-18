@@ -1,0 +1,50 @@
+<div class="element clearfix">
+  <div id="myCarousel2_{{_id}}" class="carousel slide custom">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+      <div class="active item">
+        <a href="/category/{{_id}}">
+          <img src="/categories/{{image}}"/>
+        </a>
+      </div>
+
+    </div>
+    <!-- Carousel nav -->
+    <div class="post-content">
+      <a href="/category/{{_id}}" class="desc pull-left">
+        <div>{{category_name}}</div>
+      </a>
+      <div class="persnl_details clearfix category_show pull-right">
+        <a href="{{siteURL}}/user/{{creator}}" class=" pull-right">
+          <img src="{{siteURL}}/user_images/thumb/{{creator_image}}" alt="taylor">
+        </a>
+        <div class="contns pull-right">
+          <a href="{{siteURL}}/user/{{creator}}" class="subtle">
+            <span>{{substrFirstName creator_name}}</span>
+            {{substrLastName creator_name}}
+          </a>
+        </div>
+      </div>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="post-info-inner clearfix">
+      <span class="icon_gray_calendar"></span>
+      <span class="data gray_calendar_date"> {{pinDate timestamp}} </span>
+
+      <span class="text">
+        <a class="pincount" style="pointer-events:none;" href="">
+          <span class="icon_gray_photo"></span> {{categoryboardscount}}
+        </a>
+      </span>
+
+      <span class="text">
+        <a class="pincount" href="" style="pointer-events:none;">
+          <span class="icon_gray_user_group"></span> {{categoryfollowcount}}
+        </a>
+      </span>
+
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

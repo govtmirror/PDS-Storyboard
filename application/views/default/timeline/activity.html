@@ -1,0 +1,62 @@
+
+<div class="activity-box">
+    <h2>Activity</h2>
+    <span class="no-activity">No activity available</span>
+</div>
+
+<script>
+$(function() {
+    var socket = io.connect();
+    var timlineItem = 
+    socket.on("connect", function() {
+        // Create user-resource room
+        socket.on("activity_data-{{loggeduser_id}}{{#if pin}}-{{pin._id}}{{else}}{{#if type_id}}-{{type_id}}{{/if}}{{/if}}", function(item) {
+            addItem(item, false, true);
+        });
+    });
+    getOlderItems(true);
+    $(".activity-box").scroll(function() {
+        if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight - 5) {
+            getOlderItems(false);
+        }
+    });
+});
+
+/**
+ * Adds a timeline item to the UI
+ *
+ * @param item The item to be added
+ * @param bottom Flag that indicates if the items should be added to the bottom
+ * @param fadeEffect Flag that indicates if there should be a fading effect for this item
+ */
+function addItem(item, bottom, fadeEffect){
+    if(bottom){
+        $(".activity-box").append(item);
+    } else {
+        $(item).insertAfter( $(".activity-box .no-activity") );
+    }
+    if(fadeEffect) {
+        $(".activity-box").children(bottom ? ':last' : ':first').hide().fadeIn(1500);
+    }
+}
+
+/**
+ * Makes a request to retrieve older stories
+ *
+ * @param initial Flag that indicates if it's the first request since opening the page
+ */
+function getOlderItems(initial){
+    $.ajax({
+        url: "/get_next_timeline_items/"+initial+"/{{#if pin}}pin/{{pin._id}}{{else}}{{#if type_id}}{{type}}/{{type_id}}{{else}}list{{/if}}{{/if}}",
+        dataType: 'json',
+        success: function(items) {
+            if(items.length > 0){
+                $(".no-activity").hide();
+            }
+            items.forEach(function(item){
+                addItem(item, true, !initial);
+            });
+        }
+    });
+}
+</script>

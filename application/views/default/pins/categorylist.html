@@ -1,0 +1,204 @@
+{{> pinheader this}}
+
+<div id="view_switcher" class="pull-right">
+  <div class="btn-group" data-toggle="buttons">
+    <a class="btn btn-default active" data-toggle="tab" href="#tab-timeline">
+      <input type="radio" name="options" autocomplete="off" checked>
+      <input type="hidden" name="view_name" id="view_name" value="list"/>
+      <input type="hidden" name="listEndlimit" id="listEndlimit" value="15"/>
+      <span class="glyphicon glyphicon-list"></span>
+    </a>
+    <a class="btn btn-default" data-toggle="tab" href="#tab-grid">
+      <input type="radio" name="options" autocomplete="off">
+      <input type="hidden" name="view_name" id="view_name" value="grid"/>
+      <input type="hidden" name="gridEndlimit" id="gridEndlimit" value="15"/>
+      <span class="glyphicon glyphicon-th-large"></span>
+    </a>
+  </div>
+</div>
+<span class="clearfix"></span>
+
+<div class="disqusWidget">
+  <div class="new_bg" id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_config = function () {
+      {{#if SSO}}
+        this.page.remote_auth_s3 = '{{SSO.auth}}';
+        this.page.api_key = '{{SSO.pubKey}}';
+        {{/if}}
+
+          // This adds the custom login/logout functionality
+          this.sso = {
+            name:   "{{HOST}}",
+            button: location.origin+'/default/favicon.ico',
+            icon:   location.origin+'/default/favicon.ico',
+            url:    location.origin+'/login?disqus=true',
+            logout: location.origin+'/logout?disqus=true',
+            width:  "800",
+            height: "400"
+          };
+          // Interceps when user adds a comment on a pin
+          // and makes a request to save a story for this action
+          this.callbacks.onNewComment = [function(comment) {
+            $.ajax({
+              url: "/save_comment_story",
+              data: {
+                comment: comment.text,
+                pin_id: '{{pin._id}}'
+              },
+              type: 'post'
+            });
+          }];
+        };
+  </script>
+
+  <script type="text/javascript">
+    var disqus_shortname = '{{DEFINES.DISQUS_SHORTNAME}}';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      if($('head, body').find("script[src*='embed.js']").size() == 0) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+    })();
+  </script>
+
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
+</div><!--end disqusWidget -->
+
+<div class="tab-content">
+
+  <div role="tabpanel" class="tab-pane active" id="tab-timeline">
+    <div class="wrapper_main timeline_page" id="container-timeline">
+
+      <div class="timeline_contents">
+
+        {{#if data}}
+        {{#each data}}
+        {{> catListWidget this }}
+        {{/each}}
+        {{else}}
+        <p style="text-align: center;">Sorry! No categories here.</p>
+        {{/if}}
+        <div id="loadmoreajaxloader" style="display:none;">
+          <center><img src="/default/images/loader.jpeg" /></center>
+        </div>
+
+      </div>
+      <!-- end .timeline-contents -->
+
+    </div>
+
+  </div>
+  <!-- end #tab-timeline -->
+
+  <div role="tabpanel" class="tab-pane" id="tab-grid">
+    <div id="container" {{#ifCond siteLayout 'fixed'}}class="cont-fixed"{{/ifCond}} >
+    {{#if data}}
+    {{#each data}}
+    {{> catWidget this }}
+    {{/each}}
+    {{else}}
+    <p style="text-align: center;">Sorry! No categories here.</p>
+    {{/if}}
+
+    <div id="loadmoreajaxloader" style="display:none;">
+      <center><img src="/default/images/loader.jpeg" /></center>
+    </div>
+  </div>
+  <!-- end id container -->
+</div>
+<!-- end #tab-grid -->
+</div>
+<!-- end .tab-content-->
+
+<!-- this part for iframe pop up -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<!-- this part for iframe pop up for add pins-->
+<div class="modal fade" id="myModal2" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<div class="modal fade" id="myModal3" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<!-- board -->
+<div class="modal fade" id="myModal4" tabindex="2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<!-- repin -->
+<div class="modal fade" id="myModal5" tabindex="3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<div class="modal fade" id="myModal6" tabindex="4" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<!-- category -->
+<div class="modal fade" id="myModal7" tabindex="5" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+<!-- user management -->
+<div class="modal fade" id="myModal8" tabindex="6" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+
+<script>
+$(document).ready(function(){
+    var grid_next_scroll = true,
+        list_next_scroll = true,
+        viewType = 'list';
+
+    if ($('#container').length !== 0 || $('.timeline_contents').length !== 0) {
+        $('#view_switcher a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            viewType = $(this).find('input#view_name').val();
+        });
+        $(window).scroll(function() {
+            var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
+            if (wintop > docheight - (winheight + 1000)) {
+
+                if ((viewType === 'grid' && grid_next_scroll)
+                || (viewType === 'list' && list_next_scroll)) {
+
+                    grid_next_scroll = viewType === 'grid' ? false : true;
+                    list_next_scroll = viewType === 'list' ? false : true;
+
+                    var start = $('#'+viewType+'Endlimit').val();
+                    var end = parseInt(start) + parseInt(5);
+
+                    $('#'+viewType+'Endlimit').val(end);
+                    var data = {
+                      skip: start,
+                      limit: 5
+                    };
+
+                    $.ajax({
+                        url: "/nextcategories/"+viewType,
+                        data: data,
+                        type: 'post',
+                        success: function(html) {
+                            if (html) {
+                                if(viewType === 'list') {
+                                  $(".timeline_contents").append($(html));
+                                  imagesLoaded(document.querySelector('.timeline_contents'), function(instance) {
+                                      list_next_scroll = true;
+                                  });
+                                  var children = $('.timeline_contents').children();
+                                  if(children.length){
+                                    configureTimelineElements(children);
+                                  }
+                                } else if(viewType === 'grid'){
+                                  $("#container").append($(html));
+                                  imagesLoaded(document.querySelector('#container'), function(instance) {
+                                      $('#container').masonry('reload');
+                                      grid_next_scroll = true;
+                                  });
+                                  var children = $('.timeline_contents').children();
+                                  if(children.length){
+                                    configureTimelineElements(children);
+                                  }
+                                } else {
+                                    console.log(viewType + ' is not supported.');
+                                }
+                            }
+                        },
+                        error: function(jqxhr, status, error) {
+                             console.log(error);
+                        }
+                    });
+                }
+            }
+        });
+    }
+});
+</script>

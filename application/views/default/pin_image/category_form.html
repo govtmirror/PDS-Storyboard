@@ -1,0 +1,74 @@
+<div class="modal_pou_up">
+    <div class="add_pin_top_ab3 custom-model add_pin_top">
+        <div class="modal-content">
+            <div class="modal-header gap">
+                <button type="button" class="close_yellow" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <!--  Head  -->
+            <div class="add_pin">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="add_pin_web_site">
+                            <div id="pop_cont">
+                                <h1>{{#if editing}}Edit{{else}}Add{{/if}} Category</h1>
+                                <p>&nbsp;</p>
+                                <span style="color:red;" class="msg">{{msg}}</span>
+                                <form name="category_form" id="category_form" method="post" action="/{{#if editing}}edit/category/{{posted_data._id}}{{else}}category_action{{/if}}" enctype="multipart/form-data" onsubmit="$('#add_category').addClass('disable-like');">
+                                  <br /><br />
+                                  <span style="color:red;" class="msgName">{{msgName}}</span>
+                                  <input placeholder="Category Name" type="text" name="category"  class="inputText" value="{{posted_data.category_name}}" required/>
+                                  <br /><br />
+                                  <span style="color:red;" class="msgDescription">{{msgDescription}}</span>
+                                  <textarea  placeholder="Description" name="description" required  class="inputText">{{posted_data.description}}</textarea>
+                                  {{#if editing}}
+                                  <br /><br />
+                                  <img src="/categories/thumb/{{posted_data.image}}" class="inputText inputImage">
+                                  {{/if}}
+                                  <br /><br />
+                                  <span style="color:red;" class="msgImage">{{msgImage}}</span>
+                                  <input type="file" name="cat_img" id="cat_img" {{#if editing}}{{else}}required{{/if}} class="inputText" accept="image/*"/>
+                                  <br /><br />
+                                  <input type="submit" name="add_category" id="add_category" value="{{#if editing}}Update{{else}}Add{{/if}}" class="submit"/>
+                              </form>
+                            </div>
+                            <!--</form>-->
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   // ajax form to validate files
+   $('#category_form').ajaxForm({
+        beforeSend: function(){
+          $('.loader').show();
+        },
+        success:function(data) {
+            $(".msgName").html('');
+            $(".msgDescription").html('');
+            $(".msgImage").html('');
+            if(data.error==1){
+                $(".msg").html(data.msg);
+                $(".msgName").html(data.msgName);
+                $(".msgDescription").html(data.msgDescription);
+                $(".msgImage").html(data.msgImage);
+            } else {
+                $('#myModal7').modal('hide');
+                location.href = '/category/'+data;
+            }
+        },
+        error: function(e){
+            $(".msg").html(e);
+        },
+         complete: function(jqxhr, status, error) {
+            $('.loader').hide(); 
+            $('#add_category').removeClass('disable-like');
+        }
+    }); 
+    $("#add_category").click(function(){
+        $("#category_form").validate();        
+    });
+</script>

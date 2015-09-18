@@ -1,0 +1,485 @@
+/* icons */
+.timeline_contents i {
+	background: url(../images/icon-timeline.png) no-repeat;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 25px;
+	left: -19px;
+	z-index: 99;
+	border-radius: 50%;
+	border: 2px solid #f0eeee;
+}
+
+.timeline_contents .icon {
+	position: relative;
+	display: inline-block;
+	float: left;
+}
+
+.timeline_contents .icon_plus i {
+	background-color: #fcb13b;
+	background-position: 0 0;
+}
+
+.timeline_contents .icon_multip i {
+	background-color: #ff4949;
+	background-position: -28px 0;
+}
+
+.timeline_contents .icon_write i {
+	background-color: #47a2ff;
+	background-position: -56px 0;
+}
+
+.timeline_contents .icon_fixed i {
+	background-color: #60bd1b;
+	background-position: -82px 0;
+}
+
+.timeline_contents .icon_fresh i {
+	background-color: #373737;
+	background-position: -112px 0;
+}
+
+.timeline_contents .icon_unfresh i {
+	background-color: #373737;
+	background-position: -139px 0;
+}
+
+.timeline_contents .icon_letter i {
+	background-color: #8055d0;
+	background-position: -168px 0;
+}
+
+.timeline_contents .icon_praise i {
+  background-color: #47a2ff;
+  background-position: -196px 0;
+}
+
+.timeline_contents .icon_search i {
+  background: url(../images/search.png) no-repeat center 9px #f3aa21;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width:40px; height:40px;
+  display:inline-block;
+  position:absolute; left:50%; top:50%; margin-left:-20px; margin-top:-20px;
+  border: 0px;
+}
+
+.timeline_contents .icon_link i {
+  background: url(../images/icons.png) no-repeat center #f3aa21;
+  background-position: 0 -270px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width:40px; height:40px;
+  display:inline-block;
+  position:absolute; left:50%; top:50%; margin-left:-20px; margin-top:-20px;
+  border: 0px;
+}
+
+/* end icons */
+
+
+/***timeline******/
+.timeline_contents {
+	min-height: 100px;
+	margin: 0 240px;
+	padding: 34px 65px 0 65px;
+}
+
+@media only screen and (max-width : 1350px) {
+
+	.timeline_contents {
+		min-height: 100px;
+		width: 1060px;
+		margin: 0 auto;
+		padding: 34px 65px 0 65px;
+	}
+
+}
+
+@media only screen and (min-width: 480px) and (max-width : 1059px) {
+	.timeline_contents {
+		min-height: 100px;
+		width: 100%;
+		margin: 0 auto;
+		padding: 34px 68px 0 68px;
+	}
+		.timeline_contents .wrap:last-child {
+			margin-bottom: 34px;
+		}
+}
+
+@media only screen and (max-width : 479px) {
+	.timeline_contents {
+		min-height: 100px;
+		width: 100%;
+		margin: 0 auto;
+		padding: 14px 20px 0 20px;
+	}
+		.timeline_contents .wrap:last-child {
+			margin-bottom: 34px;
+		}
+}
+
+.timeline_contents .wrap {
+	border-left: 6px solid #d1d1d1;
+	font-family: 'HelvticaNeueLTPro Roman', arial;
+}
+/* content */
+@media only screen and (min-width : 480px) {
+	.timeline_content {
+		padding-bottom: 17px;
+	}
+}
+
+@media only screen and (max-width : 480px) {
+	.timeline_content {
+		padding-bottom: 11px;
+	}
+}
+
+.timeline_content .timeline_details {
+	min-height: 100px;
+	margin-left: 27px;
+	background: #F7F7F7;
+	border: 1px solid #D1D1D1;
+	border-radius: 6px;
+	position: relative;
+	padding: 10px;
+    color: #666;
+}
+
+	.timeline_content .timeline_details::before {
+		content: "";
+		position: absolute;
+		top: 25px;
+		left: -12px;
+		height: 32px;
+		width: 19px;
+		background: url(../images/icon-timeline.png) no-repeat -226px 0;
+	}
+	.timeline_content .timeline_details.highlighting::before {
+		background-position: -242px 0;
+	}
+/* person_detail */
+.person_detail {
+	padding-bottom: 11px;
+	border-bottom: 1px solid #F0EEEE;
+	overflow: hidden;
+}
+	.person_detail img {
+		background: none repeat scroll 0 0 hsl(0, 0%, 80%);
+		float: left;
+		height: 35px;
+		width: 35px;
+	}
+
+	.person_detail .contents {
+		margin-left: 45px;
+	}
+
+	.person_detail .contents p {
+		line-height: 18px;
+		margin-bottom: 0;
+	}
+
+	.person_detail .contents span {
+		color: #999999;
+		font-size: 13px;
+	}
+	.person_detail .contents p a {
+		color: #232323;
+		font-size: 14px;
+	}
+/* end person_detail */
+
+/* person_info */
+.person_info {
+	padding-top: 10px;
+	font-size: 13px;
+	line-height: 23px;
+	color: #666666;
+}
+
+	.person_info img {
+		margin: -5px 6px 0 2px;
+		width: 21px;
+		height: 21px;
+	}
+
+	.person_info a {
+		color: #232323;
+	}
+/* end person_info */
+
+/* Illustrates an action on content: create, update, pin, repin, edit. */
+.contentAction {
+	padding-top: 10px;
+	font-size: 13px;
+	line-height: 23px;
+	color: #666;
+}
+.contentAction .pictureFrame {
+  margin: 8px 0;
+  max-height: 400px;
+  overflow: hidden;
+  text-align: center;
+}
+.contentAction img {
+  max-width: 100%;
+  width: auto;
+}
+.contentAction a {
+  color: #232323;
+}
+.statusBar {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+.statusBar .icon_gray_calendar {
+    margin: 0;
+}
+.statusBar li {
+  display: none;
+  margin-right: 12px;
+}
+.statusBar .showStatus, .statusBar .dateStatus, .statusBar .commentStatus {
+  display: inline;
+}
+
+/* Content button. */
+.commentButton {
+  display: inline;
+  margin-left: 10px;
+  margin-right: 0;
+  padding: 2px 10px 2px 5px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+}
+.commentButton:hover {
+  cursor: pointer;
+  display: inline;
+  border: 2px solid #888;
+  background: #fff;
+}
+
+/* Disqus widget */
+.disqusWidget {
+  background: #fff url(../images/disqus-gray.118x22.png) 10px 10px no-repeat;
+  margin-top: 8px;
+  padding: 40px 10px 10px;
+  border-radius: 5px;
+  display: none;
+}
+.disqusWidget.showComments {
+  display: block;
+}
+.disqusWidget .inputForm .avatar, .disqusWidget .comment .avatar {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  position: absolute;
+}
+.disqusWidget .inputFieldContainer {
+  height: 48px;
+  position: relative;
+  margin-left: 58px;
+}
+.disqusWidget .inputField {
+  width: 100%;
+  margin-top: 2px;
+  height: 44px;
+  font-family: sans-serif;
+  font-size: 20px;
+  padding-left: 10px;
+  background: transparent;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+.disqusWidget .inputField:focus {
+  background: #fff;
+  outline: 0;
+}
+.disqusWidget .comment {
+  margin-top: 20px;
+}
+.disqusWidget .byline {
+  color: #aaa;
+}
+.disqusWidget .byline .author {
+  font-weight: bold;
+  color: #2e9fff;
+  margin-right: 4px;
+}
+.disqusWidget .byline, .disqusWidget p {
+  margin-left: 58px;
+}
+#disqus_thread {
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  margin-top: 8px;
+}
+
+/* Picture overflow */
+.pictureWrapper {
+  display: inline;
+  font-family: sans-serif;
+  font-size: 30px;
+  color: #fff;
+  position: relative;
+}
+.pictureWrapper .overlay {
+  position: absolute;
+}
+.pictureWrapper .overlay .backdrop {
+  position: absolute;
+  background: #000;
+  opacity: 0.3;
+}
+.pictureWrapper .overlay:hover .backdrop,
+.pictureWrapper .overlay:hover .overflowLabel {
+  cursor: pointer;
+}
+.pictureWrapper .overlay:hover .backdrop {
+  background: #fff;
+  opacity: 0.1
+}
+.pictureWrapper .overflowLabel {
+  display: none;
+  position: absolute;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 39px;
+}
+.activity-box .pictureWrapper .overflowLabel, .pictureWrapper.userItem .overflowLabel {
+    font-size: 0.5em;
+}
+.activity-box .old-value{
+    text-decoration: line-through;
+}
+
+/* person picture */
+.timeline_contents .wrap:last-child {
+	margin-bottom: 58px;
+}
+	.timeline_contents .wrap:last-child .timeline_content {
+		padding-bottom: 0;
+	}
+.timeline_contents .person_picture::after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+@media screen and (max-width:650px) {
+.timeline_contents .wrap:last-child {
+	margin-bottom: 34px;
+}
+}
+
+@media only screen and (min-width : 480px) {
+	.timeline_contents .person_picture_detail {
+		padding: 62px 42px 0px 21px;
+		font-style: italic;
+		color: #666;
+	}
+}
+@media only screen and (max-width : 479px) {
+	.timeline_contents .person_picture_detail {
+		padding: 5px;
+		font-style: italic;
+		color: #666;
+	}
+}
+
+@media only screen and (min-width : 480px) {
+	.timeline_contents .person_picture .pictureWrapper,
+	.timeline_contents .person_picture img {
+		margin-right: 15px;
+		margin-top: 13px;
+		width: 150px;
+		height: 150px;
+		float: left;
+	}
+}
+@media only screen and (max-width : 479px) {
+	.timeline_contents .person_picture .pictureWrapper,
+	.timeline_contents .person_picture img {
+		margin-right: 10px;
+		margin-top: 13px;
+		width: 100px;
+		height: 100px;
+	}
+}
+.timeline_contents .person_picture img {
+  margin-top: 0;
+}
+
+.pictureWrapper{
+  display: inline-block;
+}
+.pictureWrapper .overlay{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0.5;
+    background-color: black;
+    transition: 1s;
+}
+.pictureWrapper:hover .overlay{
+    opacity: 0;
+}
+.pictureWrapper .overflowLabel{
+    top: 50%;
+    margin-top: -10px;
+    display: block;
+    opacity: 1;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+}
+
+
+li.userStatus {
+  display: inline;
+}
+
+li.boardStatus {
+  display: inline;
+}
+.pictureWrapper{
+  display: inline-block;
+}
+.pictureWrapper .overlay{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0.5;
+    background-color: black;
+    transition: 1s;
+}
+.pictureWrapper:hover .overlay{
+    opacity: 0;
+}
+.pictureWrapper .overflowLabel{
+    top: 50%;
+    margin-top: -10px;
+    display: block;
+    opacity: 1;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+}
+.pictureWrapper .storyImage{
+    max-width: 120px;
+}

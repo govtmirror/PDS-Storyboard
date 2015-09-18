@@ -1,0 +1,53 @@
+{{> pinheader this}}
+
+<div class="wrapper_main">
+    <div class="search_screening_bar">
+        <nav>
+            <ul>
+                <li {{#ifCond tab 0}}class="current"{{/ifCond}}><a href="javascript:;" data-tab="0">All Pins</a>
+                </li>
+                <li {{#ifCond tab 1}}class="current"{{/ifCond}}><a href="javascript:;" data-tab="1">PDS</a>
+                </li>
+                {{#if loggeduser_id}}
+                <li {{#ifCond tab 2}}class="current"{{/ifCond}}><a href="javascript:;" data-tab="2">My Pins</a>
+                </li>
+                <li {{#ifCond tab 3}}class="current"{{/ifCond}}><a href="javascript:;" data-tab="3">My Boards</a>
+                </li>
+                <li {{#ifCond tab 4}}class="current"{{/ifCond}}><a href="javascript:;" data-tab="4">My Categories</a>
+                </li>
+                <li {{#ifCond tab 5}}class="current"{{/ifCond}}><a href="javascript:;" data-tab="5">People</a>
+                </li>
+                {{/if}}
+            </ul>
+        </nav>
+    </div>
+    <span class="clearfix"></span>
+    <div id="container" class="search-result-page-content cont-fixed">
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<!-- this part for iframe pop up for add pins-->
+<div class="modal fade" id="myModal2" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="myModal3" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- board -->
+<div class="modal fade" id="myModal4" tabindex="2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- repin -->
+<div class="modal fade" id="myModal5" tabindex="3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="myModal6" tabindex="4" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- category -->
+<div class="modal fade" id="myModal7" tabindex="5" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- user management -->
+<div class="modal fade" id="myModal8" tabindex="6" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>

@@ -1,0 +1,98 @@
+<div class="row_bar">
+    <span class="left_head">
+  <a href="{{user_link}}"><img src="{{user_image}}" alt="photo"></a>
+</span>
+    <div class="main_info">
+        <span class="group"><a href="{{user_link}}" class="black_link">{{user_name}}</a><span class="gray_text">{{text}}</span></span>
+        <span class="time_box">{{timeAgo timestamp}}</span>
+        {{#if items}}
+            <div class="contentAction">
+                <div>
+                    <span class="items">
+                        {{#if new_value}}
+                            <span>to</span>
+                            <img src="{{new_value}}" height="30" />
+                        {{else}}
+                            {{#each items}}
+                                    {{#oneElement ../../items}}
+                                        {{#if updates}}
+                                            {{#each updates}}
+                                                {{#ifOr this.field 'name,category,board'}}
+                                                    <div class="icon_text_group">
+                                                        <i class="icon_boxs pull-left"></i>
+                                                        <a href="{{../../link}}" class="black_link pull-left">{{this.to}}</a>
+                                                    </div>
+                                                    <div class="icon_text_group">
+                                                        <i class="icon_boxs pull-left"></i>
+                                                        <a href="{{../../link}}" class="black_link old-value pull-left">{{this.from}}</a>
+                                                    </div>
+                                                {{/ifOr}}
+                                                {{#ifOr this.field 'description,image'}}
+                                                    <div class="icon_text_group">
+                                                        <i class="icon_boxs pull-left"></i>
+                                                        <a href="{{../../link}}" class="black_link pull-left">{{../../name}}</a>
+                                                    </div>
+                                                {{/ifOr}}
+                                            {{/each}}
+                                        {{else}}
+                                           {{#ifCond item_type 'user'}}
+                                                <div class="icon_text_group">
+                                                    <i class="icon_user pull-left"></i>
+                                                    <a href="{{link}}" class="black_link pull-left">{{name}}</a>
+                                                </div>
+                                           {{/ifCond}}
+                                           {{#notifCond item_type 'user'}}
+                                                <div class="icon_text_group">
+                                                   {{#ifCond 'pin' item_type}}
+                                                    <div class="pictureWrapper pull-left">
+                                                        <a href="{{link}}">
+                                                            <img src="{{image}}" width="30" height="30">
+                                                        </a>
+                                                        &nbsp;
+                                                    </div>
+                                                   {{/ifCond}}
+                                                   {{#notifCond 'pin' item_type}}
+                                                        <i class="icon_boxs pull-left"></i>
+                                                    {{/notifCond}}
+                                                    <a href="{{link}}" class="black_link pull-left">{{name}}</a>
+                                                </div>
+                                            {{/notifCond}}
+                                            {{#if ../../../related_item}}
+                                                <div class="icon_text_group">
+                                                   <span class="pull-left">{{../../../../related_item.link_word}}&nbsp;</span>
+                                                    <i class="icon_boxs pull-left"></i>
+                                                    <a href="{{../../../../related_item.link}}" class="black_link pull-left">{{../../../../related_item.name}}</a>
+                                                </div>
+                                            {{/if}}
+                                        {{/if}}
+                                    {{/oneElement}}
+                            {{/each}}
+                        {{/if}}
+                    </span>
+                </div>
+                {{#arrlenGtOne items}}
+                    <div>
+                        {{#each items}}
+                            {{#ifCondAll @index "<=" 2}}
+                            <div class="pictureWrapper">
+                                <a href="{{link}}"><img src="{{image}}"  width="30" height="30"/></a>
+                            </div>
+                            {{/ifCondAll}}
+                            {{#ifCondAll @index '==' 3}}
+                            <div class="pictureWrapper">
+                                <a href="{{link}}">
+                                    <img src="{{image}}" alt="timeline" width="30" height="30">
+                                </a>
+                                {{#isMiddleElement @index ../../items}}
+                                    <div class="overlay"></div>
+                                    <a href="{{link}}" class="overflowLabel">+{{math ../../../items.length '-1' @index}}</a>
+                                {{/isMiddleElement}}
+                            </div>
+                            {{/ifCondAll}}
+                        {{/each}}
+                    </div>
+                {{/arrlenGtOne}}
+            </div>
+        {{/if}}
+    </div>
+</div>

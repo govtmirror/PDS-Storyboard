@@ -1,0 +1,23 @@
+{{#each data}}
+    {{#ifCond pin_type 'image'}}
+        <li>
+            <a href="/pin/{{_id}}" class="brd_itm">
+                <img src="{{imagepathSmall}}{{tmb_image_name.[0]}}"  >
+            </a> 
+        </li>
+    {{/ifCond}}
+    {{#ifCond pin_type 'url_image'}}
+        <li>
+            <a href="/pin/{{_id}}" class="brd_itm">
+                <img src="{{imagepathSmall}}{{tmb_image_name.[0]}}"  >
+            </a> 
+        </li>
+    {{/ifCond}}
+    {{#ifCond pin_type 'web_page'}}
+        <li>
+            <a href="/pin/{{_id}}" class="brd_itm">
+                <img src="{{imagepathSmall}}{{image_name}}"  >
+            </a> 
+        </li>
+    {{/ifCond}}
+{{/each}}

@@ -1,0 +1,121 @@
+{{> pinheader this}}
+<div class="timeline wrapper_main timeline_page" id="container-timeline">
+    <div class="timeline_contents"></div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<!-- this part for iframe pop up for add pins-->
+<div class="modal fade" id="myModal2" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="myModal3" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- board -->
+<div class="modal fade" id="myModal4" tabindex="2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- repin -->
+<div class="modal fade" id="myModal5" tabindex="3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="myModal6" tabindex="4" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- category -->
+<div class="modal fade" id="myModal7" tabindex="5" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<!-- user management -->
+<div class="modal fade" id="myModal8" tabindex="6" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+<script>
+    window.disqus_config = function () {
+
+        {{#if SSO}}
+            this.page.remote_auth_s3 = '{{SSO.auth}}';
+            this.page.api_key = '{{SSO.pubKey}}';
+        {{/if}}
+
+    // This adds the custom login/logout functionality
+        this.sso = {
+              name:   location.hostname,
+              button: location.origin+'/default/favicon.ico',
+              icon:   location.origin+'/default/favicon.ico',
+              url:    location.origin+'/login?disqus=true',
+              logout: location.origin+'/logout?disqus=true',
+              width:  "800",
+              height: "400"
+        };
+        // Interceps when user adds a comment on a pin
+        // and makes a request to save a story for this action
+        this.callbacks.onNewComment = [function(comment) {
+            console.log('save_comment_story', comment);
+            $.ajax({
+                url: "/save_comment_story",
+                data: {
+                    comment: comment.text,
+                    id: window.disqus_identifier,
+                    url: window.disqus_url
+                },
+                type: 'post'
+            });
+        }];
+    };
+    window.disqus_shortname = '{{getDefine "DISQUS_SHORTNAME"}}';
+</script>
+<script>
+$(function() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    var socket = io.connect();
+    var timlineItem = 
+    socket.on("connect", function() {
+        // Create user room
+        socket.on("timeline_data-{{user_id}}", function(item) {
+            addItem(item, false, true);
+            // New items button show
+            if($(window).scrollTop()){
+                $('#newItemsBtn').removeClass('hide');
+            }
+        });
+    });
+    getOlderItems(true);
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            getOlderItems(false);
+        }
+    });
+});
+
+/**
+ * Adds a timeline item to the UI
+ *
+ * @param item The item to be added
+ * @param bottom Flag that indicates if the items should be added to the bottom
+ * @param fadeEffect Flag that indicates if there should be a fading effect for this item
+ */
+function addItem(item, bottom, fadeEffect){
+    if(bottom){
+        $(".timeline_contents").append(item);
+    } else {
+        $(".timeline_contents").prepend(item);
+    }
+    if(fadeEffect) {
+        $(".timeline_contents").children(bottom ? ':last' : ':first').hide().fadeIn(1500);
+    }
+}
+
+/**
+ * Makes a request to retrieve older stories
+ *
+ * @param initial Flag that indicates if it's the first request since opening the page
+ */
+function getOlderItems(initial){
+    $.ajax({
+        url: "/get_next_timeline_items/"+initial+"/timeline",
+        dataType: 'json',
+        success: function(items) {
+            items.forEach(function(item){
+                addItem(item, true, !initial);
+            });
+        }
+    });
+}
+</script>

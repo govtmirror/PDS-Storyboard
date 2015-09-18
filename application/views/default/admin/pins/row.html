@@ -1,0 +1,9 @@
+{{#ifCond pin_type 'web_page'}}
+<img src="/pins/images/{{image_name}}" width="100%" >
+{{/ifCond}}
+{{#ifCond pin_type 'image'}}
+<img src="/pins/images/{{image_name}}" width="100%" >
+{{/ifCond}}
+{{#ifCond pin_type 'url_image'}}
+<img src="/pins/images/{{image_name.[0]}}" width="100%" >
+{{/ifCond}}
